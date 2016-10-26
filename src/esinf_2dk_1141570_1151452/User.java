@@ -135,7 +135,7 @@ public class User {
      * @param visitedCities user's visited cities list
      */
     public void setVisitedCities(List<City> visitedCities) {
-        this.visitedCities = visitedCities;
+        this.visitedCities = new LinkedList<>(visitedCities);
     }
 
     /**
@@ -144,7 +144,7 @@ public class User {
      * @return user's friends list
      */
     public Set<User> getFriends() {
-        return friends;
+        return new HashSet<>(friends);
     }
 
     /**
@@ -153,7 +153,7 @@ public class User {
      * @param friends user's friends list
      */
     public void setFriends(Set<User> friends) {
-        this.friends = friends;
+        this.friends = new HashSet<>(friends);
     }
 
     @Override
