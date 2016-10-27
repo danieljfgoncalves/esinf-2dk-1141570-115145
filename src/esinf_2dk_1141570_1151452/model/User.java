@@ -155,6 +155,17 @@ public class User {
     public void setFriends(Set<User> friends) {
         this.friends = new HashSet<>(friends);
     }
+    
+    //METHODS
+    /**
+     * Removes friend(user) from the usersList
+     * 
+     * @param friend the friend(user) to remove
+     * @return true if the friend(user) is successfully removed, false otherwise
+     */
+    public boolean removeFriendship(User friend){
+        return this.friends.remove(friend) && friend.friends.remove(this);
+    }
 
     @Override
     public int hashCode() {
