@@ -105,6 +105,18 @@ public class SocialNetwork {
     }
     
     /**
+     * Add an user to the usersList.
+     * 
+     * @param nickname the nickname of the user to add
+     * @param email the email of the user to add
+     * @return true if the user is successfully added, false otherwise
+     */
+    public boolean addUser(String nickname, String email){
+        User user = new User(nickname, email);
+        return this.usersList.add(user);
+    }
+    
+    /**
      * Add a city to the citiesList.
      * 
      * @param city the city to add
