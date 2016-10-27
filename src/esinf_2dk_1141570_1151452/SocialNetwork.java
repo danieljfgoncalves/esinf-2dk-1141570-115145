@@ -93,6 +93,17 @@ public class SocialNetwork {
     }
 
     //METHODS
+    /**
+     * Add an user to the usersList.
+     *
+     * @param user the user to add 
+     * @return true if the user is successfully added, false otherwise
+     */
+    public boolean addUser(User user) {
+
+        return this.usersList.add(user);
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
