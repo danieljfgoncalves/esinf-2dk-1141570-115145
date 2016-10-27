@@ -3,6 +3,7 @@ package esinf_2dk_1141570_1151452.model;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javafx.util.Pair;
 
 /**
  * Represents a SocialNetwork
@@ -100,8 +101,30 @@ public class SocialNetwork {
      * @return true if the user is successfully added, false otherwise
      */
     public boolean addUser(User user) {
-
         return this.usersList.add(user);
+    }
+    
+    /**
+     * Add a city to the citiesList.
+     * 
+     * @param city the city to add
+     * @return true if the city is successfully added, false otherwise
+     */
+    public boolean addCity(City city) {
+        return this.citiesList.add(city);
+    }
+    
+    /**
+     * Add a city to the citiesList.
+     * 
+     * @param coordinates city's coordinates to set the new city
+     * @param name city's name to set the new city
+     * @param points city's points to set the new city
+     * @return true if the city is successfully added, false otherwise
+     */
+    public boolean addCity(Pair<Double, Double> coordinates, String name, int points){
+        City city = new City(coordinates, name, points);
+        return this.citiesList.add(city);
     }
 
     @Override
