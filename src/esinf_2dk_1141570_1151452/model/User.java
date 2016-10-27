@@ -184,16 +184,13 @@ public class User {
     public String toString() {
 
         StringBuffer buffer = new StringBuffer(
-                String.format("User {%nNickname=%s%nEmail%s%n",
+                String.format("User {%nNickname=%s%nEmail=%s%n",
                         this.nickname, this.email));
 
-        // TODO: Uncomment after City class is implemented.
-        /*
         buffer.append("Visited Cities:%n");
         for (City city : visitedCities) {
             buffer.append(String.format("%t%s%n", city.getName()));
         }
-        */
         
         buffer.append("Friends:%n");
         for (User friend : friends) {
