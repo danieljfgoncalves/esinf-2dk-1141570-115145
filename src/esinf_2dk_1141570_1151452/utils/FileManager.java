@@ -23,11 +23,6 @@ public class FileManager {
     static BufferedReader input;
 
     /**
-     * Test files root directory path.
-     */
-    static final File ROOT_PATH = new File("", "test-files" + File.separatorChar);
-
-    /**
      * Constant to represent files with 10 elements.
      */
     static final String TEN = "10";
@@ -68,16 +63,17 @@ public class FileManager {
      */
     static boolean loadCities(SocialNetwork socialNetwork, String num) {
 
-        String filepath = File.separatorChar
+        boolean loaded = true;
+
+        String filepath = "test-files"
+                + File.separatorChar
                 + String.format("files%s", num)
                 + File.separatorChar
                 + String.format("cities%s.txt", num);
 
-        File file = new File(ROOT_PATH, filepath);
-
         try {
 
-            input = new BufferedReader(new FileReader(file));
+            input = new BufferedReader(new FileReader(filepath));
 
             String line;
             while ((line = input.readLine()) != null) {
@@ -85,19 +81,29 @@ public class FileManager {
                 // [0]-Name;[1]-Points;[2]-Latitude;[3]-Longitude
                 String[] attributes = line.split(",");
 
-                City newCity = new City(
-                        new Pair(
-                                Double.parseDouble(attributes[2]),
-                                Double.parseDouble(attributes[3])),
-                        attributes[0],
-                        Integer.parseInt(attributes[1]));
-                // TODO: Implement when addCity funcionality is developed.
+                try {
+
+                    City newCity = new City(
+                            new Pair(
+                                    Double.parseDouble(attributes[2]),
+                                    Double.parseDouble(attributes[3])),
+                            attributes[0],
+                            Integer.parseInt(attributes[1]));
+                    
+                    // TODO: Implement when addCity funcionality is developed.
+                    System.out.println(newCity);
+                } catch (Exception ex) {
+                    System.out.println("Object not created correctly.");
+                    loaded = false;
+                }
             }
 
         } catch (FileNotFoundException ex) {
             System.out.println("File not found.");
+            loaded = false;
         } catch (IOException ex) {
             System.out.println("Something went wrong\nError: " + ex.getMessage());
+            loaded = false;
         } finally {
             try {
                 input.close();
@@ -106,6 +112,6 @@ public class FileManager {
             }
         }
 
-        return true;
+        return loaded;
     }
 }
