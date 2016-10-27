@@ -1,6 +1,7 @@
 package esinf_2dk_1141570_1151452;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -27,31 +28,31 @@ public class SocialNetwork {
      * builds up an instance of SocialNetwork with parameters by default
      */
     public SocialNetwork() {
-        this.usersList = new HashSet<>();
-        this.citiesList = new HashSet<>();
+        this.usersList = new HashSet<User>();
+        this.citiesList = new HashSet<City>();
     }
 
     /**
      * builds up an instance of SocialNetwork from another instance of
      * SocialNetwork
      *
-     * @param otherSN
+     * @param otherSN SocialNetwork to copy
      */
     public SocialNetwork(SocialNetwork otherSN) {
-        this.citiesList = otherSN.citiesList;
-        this.usersList = otherSN.usersList;
+        this.usersList = new HashSet<User>(otherSN.usersList);
+        this.citiesList = new HashSet<City>(otherSN.citiesList);
     }
 
     /**
      * builds up an instance of SocialNetwork with parameters usersList,
      * citiesList
      *
-     * @param usersList
-     * @param citiesList
+     * @param usersList SocialNetwork's usersList
+     * @param citiesList SocialNetwork's citiesList
      */
     public SocialNetwork(Set usersList, Set citiesList) {
-        this.usersList = usersList;
-        this.citiesList = citiesList;
+        this.usersList = new HashSet<User>(usersList);
+        this.citiesList = new HashSet<City>(citiesList);
     }
 
     //GETTERS AND SETTERS
@@ -89,6 +90,15 @@ public class SocialNetwork {
      */
     public void setCitiesList(Set<City> citiesList) {
         this.citiesList = citiesList;
+    }
+
+    //METHODS
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.usersList);
+        hash = 29 * hash + Objects.hashCode(this.citiesList);
+        return hash;
     }
 
     @Override

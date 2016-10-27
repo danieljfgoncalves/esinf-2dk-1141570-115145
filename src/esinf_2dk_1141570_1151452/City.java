@@ -1,5 +1,6 @@
 package esinf_2dk_1141570_1151452;
 
+import java.util.Objects;
 import javafx.util.Pair;
 
 /**
@@ -62,7 +63,7 @@ public class City {
     /**
      * builds up an instance of City from another instance of City
      *
-     * @param otherCity
+     * @param otherCity City to copy
      */
     public City(City otherCity) {
         this.coordinates = otherCity.coordinates;
@@ -72,16 +73,16 @@ public class City {
     }
 
     /**
-     * builds up an instance of City with parameters coordinates, mayor, name, points
-     * 
-     * @param coordinates
-     * @param mayor
-     * @param name
-     * @param points
+     * builds up an instance of City with parameters coordinates, mayor, name,
+     * points
+     *
+     * @param coordinates City's coordinates
+     * @param name City's name
+     * @param points City's points
      */
-    public City(Pair coordinates, User mayor, String name, int points) {
+    public City(Pair coordinates, String name, int points) {
         this.coordinates = coordinates;
-        this.mayor = mayor;
+        this.mayor = new User();
         this.name = name;
         this.points = points;
     }
@@ -158,6 +159,17 @@ public class City {
     public void setMayor(User mayor) {
         this.mayor = mayor;
     }
+    
+    //METHODS
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 11 * hash + Objects.hashCode(this.name);
+        hash = 11 * hash + this.points;
+        hash = 11 * hash + Objects.hashCode(this.coordinates);
+        hash = 11 * hash + Objects.hashCode(this.mayor);
+        return hash;
+    }
 
     @Override
     public boolean equals(Object otherObject) {
@@ -170,10 +182,7 @@ public class City {
 
         final City otherCity = (City) otherObject;
 
-        return this.getName().equals(otherCity.getName())
-                && this.getPoints() == (otherCity.getPoints())
-                && this.getMayor().equals(otherCity.getMayor())
-                && this.coordinates.equals(otherCity.getCoordinates());
+        return this.getName().equals(otherCity.getName()) || this.getCoordinates().equals(otherCity.getCoordinates());
     }
 
     @Override
