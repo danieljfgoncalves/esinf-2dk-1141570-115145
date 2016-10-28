@@ -4,12 +4,15 @@ import esinf_2dk_1141570_1151452.model.City;
 import esinf_2dk_1141570_1151452.model.SocialNetwork;
 import esinf_2dk_1141570_1151452.model.User;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Locale;
 import javafx.util.Pair;
 
 /**
@@ -25,6 +28,11 @@ public class FileManager {
      * Text file reader.
      */
     static BufferedReader input;
+
+    /**
+     * Text file writer.
+     */
+    static BufferedWriter output;
 
     /**
      * Constant to represent default files with 10 elements.
@@ -88,11 +96,12 @@ public class FileManager {
                 + String.format("users%s.txt", num);
     }
 
+    // Read Files
     /**
      * Loads cities from a text file to a social network object.
      *
      * @param socialNetwork The Social Network where to load the cities.
-     * @param filepath the files location
+     * @param filepath the file's location
      *
      * @return true if all cities are loaded correctly.
      */
@@ -148,7 +157,7 @@ public class FileManager {
      * Loads users from a text file to a social network object.
      *
      * @param socialNetwork The Social Network where to load the cities.
-     * @param filepath the files location
+     * @param filepath the file's location
      *
      * @return true if all users are loaded correctly.
      */
@@ -239,14 +248,12 @@ public class FileManager {
      */
     public static SocialNetwork loadSocialNetwork(String citiesFilePath, String usersFilePath) {
 
-        boolean loaded = true;
-
         SocialNetwork sn = new SocialNetwork();
 
-        loaded = loadCities(sn, citiesFilePath);
-        loaded = loadUsers(sn, usersFilePath);
+        boolean loadedCities = loadCities(sn, citiesFilePath);
+        boolean loadedUsers = loadUsers(sn, usersFilePath);
 
-        if (!loaded) {
+        if (!(loadedCities && loadedUsers)) {
 
             System.out.println("Some cities/users may not be loaded correctly.");
         }
@@ -254,10 +261,115 @@ public class FileManager {
         return sn;
     }
 
-    public static void main(String[] args) {
+    // Write Files
+    /**
+     * Saves cities to a text file from a social network object.
+     *
+     * @param socialNetwork The Social Network where the cities to save are.
+     * @param filepath the output's location
+     *
+     * @return true if all cities are saved correctly.
+     */
+    static boolean saveCities(SocialNetwork socialNetwork, String filepath) {
 
-        SocialNetwork sn = FileManager.loadSocialNetwork(defaultCitiesFile(DEFAULT_TEN), defaultUsersFile(DEFAULT_TEN));
+        boolean saved = true;
 
-        System.out.println(sn);
+        try {
+            output = new BufferedWriter(new FileWriter(filepath));
+
+            Iterator citiesIt = socialNetwork.getCitiesList().iterator();
+            while (citiesIt.hasNext()) {
+
+                City city = (City) citiesIt.next();
+                String line = String.format(Locale.CANADA, "%s,%d,%.6f,%.6f%n",
+                        city.getName(),
+                        city.getPoints(),
+                        city.getCoordinates().getKey().doubleValue(),
+                        city.getCoordinates().getValue());
+
+                output.write(line);
+            }
+
+        } catch (IOException ex) {
+            System.out.println("Something went wrong\nError: " + ex.getMessage());
+            saved = false;
+        } finally {
+            try {
+                output.close();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return saved;
+    }
+
+    /**
+     * Saves users to a text file from a social network object.
+     *
+     * @param socialNetwork The Social Network where the users to save are.
+     * @param filepath the output's location
+     *
+     * @return true if all users are saved correctly.
+     */
+    static boolean saveUsers(SocialNetwork socialNetwork, String filepath) {
+
+        boolean saved = true;
+
+        try {
+            output = new BufferedWriter(new FileWriter(filepath));
+
+            Iterator usersIt = socialNetwork.getUsersList().iterator();
+            while (usersIt.hasNext()) {
+
+                User user = (User) usersIt.next();
+                StringBuilder line = new StringBuilder(user.getNickname() + ',' + user.getEmail());
+                for (City city : user.getVisitedCities()) {
+                    line.append(',' + city.getName());
+                }
+                line.append("%n");
+                boolean comma = false;
+                for (User friend : user.getFriends()) {
+
+                    line.append(comma ? "," : "" + friend.getNickname());
+                    comma = true;
+                }
+                line.append("%n");
+
+                output.write(line.toString());
+            }
+
+        } catch (IOException ex) {
+            System.out.println("Something went wrong\nError: " + ex.getMessage());
+            saved = false;
+        } finally {
+            try {
+                output.close();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return saved;
+    }
+    
+    /**
+     * Saves users & cities to a text file from a social network object.
+     *
+     * @param socialNetwork social network to save.
+     * @param citiesFilePath file path to save cities.
+     * @param usersFilePath file path to save users.
+     *
+     * @return a social network with users & cities loaded.
+     */
+    public static boolean saveSocialNetwork(SocialNetwork socialNetwork, String citiesFilePath, String usersFilePath) {
+
+        boolean savedCities = saveCities(socialNetwork, citiesFilePath);
+        boolean savedUsers = saveUsers(socialNetwork, usersFilePath);
+
+        if (!(savedCities && savedUsers)) {
+
+            System.out.println("Some cities/users may not be saved correctly.");
+        }
+
+        return (savedCities && savedUsers);
     }
 }
