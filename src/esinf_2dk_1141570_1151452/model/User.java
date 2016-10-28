@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import javafx.util.Pair;
 
 /**
  * Represents a User.
@@ -125,7 +126,7 @@ public class User {
      * 
      * @return user's visited cities list
      */
-    public List<City> getVisitedCities() {
+    public LinkedList<City> getVisitedCities() {
         return new LinkedList<>(this.visitedCities);
     }
 
@@ -199,6 +200,22 @@ public class User {
             }
         }
         return points;
+    }
+    
+    /**
+     * Obtain the friends of the user in a given location(coordinates).
+     * 
+     * @param coordinates the coordinates from the given location
+     * @return the friends of the user in a given location(coordinates).
+     */
+    public HashSet<User> userFriendsInAGivenLocation(Pair <Double, Double> coordinates){
+        HashSet<User> friendsByCoordenates = new HashSet<>();
+        for (User friend : this.friends) {
+            if (friend.getVisitedCities().getLast().getCoordinates().equals(coordinates)) {
+                friendsByCoordenates.add(friend);
+            }
+        }
+        return friendsByCoordenates;
     }
 
     @Override
