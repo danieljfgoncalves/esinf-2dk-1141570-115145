@@ -117,6 +117,27 @@ public class SocialNetwork {
     }
 
     /**
+     * Remove an user from the usersList.
+     *
+     * @param user the user to remove
+     * @return true if the user is successfully removed, false otherwise
+     */
+    public boolean removeUser(User user) {
+        return this.usersList.remove(user);
+    }
+
+    /**
+     * Remove an user from the usersList.
+     *
+     * @param nickname the user's, to remove, nickname
+     * @return true if the user is successfully removed, false otherwise
+     */
+    public boolean removeUser(String nickname) {
+        
+        return this.usersList.remove(new User(nickname, null));
+    }
+
+    /**
      * Checks if usersList has a user.
      *
      * @param user the user to check
