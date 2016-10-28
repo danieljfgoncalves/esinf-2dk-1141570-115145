@@ -191,9 +191,25 @@ public class User {
     public boolean checkInAnewCity(City city) {
         if (this.visitedCities.isEmpty() || !(this.visitedCities.getLast().equals(city))) {
             this.visitedCities.add(city);
-            if ((this.pointsInAgivenCity(city)) >= (city.getMayor().pointsInAgivenCity(city))) {
-                city.setMayor(this);
-            }
+            
+            this.isMayor(city);
+            
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Updates the Mayor in the given city if the user has more points than the
+     * current mayor.
+     *
+     * @param city the city to check
+     * @return true if the user is the new mayor, false otherwise
+     */
+    public boolean isMayor(City city) {
+
+        if ((this.pointsInAgivenCity(city)) > (city.getMayor().pointsInAgivenCity(city))) {
+            city.setMayor(this);
             return true;
         }
         return false;
@@ -223,13 +239,29 @@ public class User {
      * @return the friends of the user in a given location(coordinates).
      */
     public HashSet<User> userFriendsInAGivenLocation(Pair<Double, Double> coordinates) {
-        HashSet<User> friendsByCoordenates = new HashSet<>();
+        HashSet<User> friendsByCoordinates = new HashSet<>();
         for (User friend : this.friends) {
             if (friend.getVisitedCities().getLast().getCoordinates().equals(coordinates)) {
-                friendsByCoordenates.add(friend);
+                friendsByCoordinates.add(friend);
             }
         }
-        return friendsByCoordenates;
+        return friendsByCoordinates;
+    }
+
+    /**
+     * Obtain the friends of the user in a given location(city).
+     *
+     * @param city the city where the user is
+     * @return the friends of the user in a given location(coordinates).
+     */
+    public HashSet<User> userFriendsInAGivenLocation(City city) {
+        HashSet<User> friendsByCity = new HashSet<>();
+        for (User friend : this.friends) {
+            if (friend.getVisitedCities().getLast().equals(city)) {
+                friendsByCity.add(friend);
+            }
+        }
+        return friendsByCity;
     }
 
     @Override

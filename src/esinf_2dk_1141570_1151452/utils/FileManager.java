@@ -369,6 +369,8 @@ public class FileManager {
 
             System.out.println("Some cities/users may not be saved correctly.");
         }
+        
+        socialNetwork.updateMayors();
 
         return (savedCities && savedUsers);
     }

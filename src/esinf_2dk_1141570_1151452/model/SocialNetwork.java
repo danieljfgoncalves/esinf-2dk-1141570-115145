@@ -1,8 +1,11 @@
 package esinf_2dk_1141570_1151452.model;
 
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 import javafx.util.Pair;
 
 /**
@@ -215,6 +218,46 @@ public class SocialNetwork {
     public boolean addCity(Pair<Double, Double> coordinates, String name, int points) {
         City city = new City(coordinates, name, points);
         return this.citiesList.add(city);
+    }
+
+    /**
+     * Updates mayors of each city in the cities list.
+     */
+    public void updateMayors() {
+        for (City city : citiesList) {
+            for (User user : usersList) {
+
+                user.isMayor(city);
+            }
+        }
+    }
+
+    /**
+     * Lists Mayors by mayors points in descending order.
+     *
+     * @return a map with (City, Mayor) ordered by mayors points (descending).
+     */
+    public Map listMayors() {
+
+        TreeMap<City, User> map = new TreeMap(new Comparator<City>() {
+
+            @Override
+            public int compare(City c1, City c2) {
+
+                int ptsMayor1 = c1.getMayor().pointsInAgivenCity(c1);
+                int ptsMayor2 = c2.getMayor().pointsInAgivenCity(c2);
+
+                return ptsMayor1 == ptsMayor2 ? 0
+                        : ptsMayor1 > ptsMayor2 ? -1 : 1; // switched for descending order
+            }
+        });
+
+        for (City city : citiesList) {
+
+            map.put(city, city.getMayor());
+        }
+
+        return map;
     }
 
     @Override
