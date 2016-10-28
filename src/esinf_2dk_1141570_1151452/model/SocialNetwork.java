@@ -123,7 +123,17 @@ public class SocialNetwork {
      * @return true if the user is successfully removed, false otherwise
      */
     public boolean removeUser(User user) {
-        return this.usersList.remove(user);
+
+        boolean removedCorrectly = true;
+
+        for (User friend : user.getFriends()) {
+
+            if (!user.removeFriendship(friend)) {
+                removedCorrectly = false;
+            }
+        }
+
+        return this.usersList.remove(user) && removedCorrectly;
     }
 
     /**
@@ -133,8 +143,30 @@ public class SocialNetwork {
      * @return true if the user is successfully removed, false otherwise
      */
     public boolean removeUser(String nickname) {
-        
-        return this.usersList.remove(new User(nickname, null));
+
+        boolean removedCorrectly = true;
+
+        // Find user with received nickname in users list.
+        User user = null;
+        for (User otherUser : usersList) {
+            if (otherUser.getNickname().equals(nickname)) {
+                user = otherUser;
+            }
+        }
+
+        // If user isn't in the list return false.
+        if (user == null) {
+            return false;
+        }
+
+        for (User friend : user.getFriends()) {
+
+            if (!user.removeFriendship(friend)) {
+                removedCorrectly = false;
+            }
+        }
+
+        return this.usersList.remove(user) && removedCorrectly;
     }
 
     /**
