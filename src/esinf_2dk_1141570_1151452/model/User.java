@@ -28,7 +28,7 @@ public class User {
      * Cities user visited in chronologic order (last visited = current
      * location)
      */
-    private List<City> visitedCities;
+    private LinkedList<City> visitedCities;
 
     /**
      * List of the user's friends.
@@ -165,6 +165,40 @@ public class User {
      */
     public boolean removeFriendship(User friend){
         return this.friends.remove(friend) && friend.friends.remove(this);
+    }
+    
+    /**
+     * Checks the user in a new city and set up the user as Mayor if
+     * he has more points than the current Mayor.
+     * 
+     * @param city the new city where the user checks in
+     * @return true if the user checks in a new city, false otherwise
+     */
+    public boolean checkInAnewCity(City city){
+        if (this.visitedCities.isEmpty() || !(this.visitedCities.getLast().equals(city))) {
+            this.visitedCities.add(city);
+            if ((this.pointsInAgivenCity(city)) >= (city.getMayor().pointsInAgivenCity(city))) {
+                city.setMayor(this);
+            }
+            return true;    
+        }
+        return false;
+    }
+    
+    /**
+     * Obtains the points of the user in a given city.
+     * 
+     * @param givenCity the given city to check how much points of the user has in it
+     * @return the points of the user has in a given city
+     */
+    public int pointsInAgivenCity(City givenCity){
+        int points = 0;
+        for (City visitedCity : visitedCities) {
+            if (visitedCity.equals(givenCity)) {
+                points += visitedCity.getPoints();
+            }
+        }
+        return points;
     }
 
     @Override
