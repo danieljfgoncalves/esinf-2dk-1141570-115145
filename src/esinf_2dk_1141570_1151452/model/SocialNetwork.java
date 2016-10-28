@@ -97,44 +97,69 @@ public class SocialNetwork {
     /**
      * Add an user to the usersList.
      *
-     * @param user the user to add 
+     * @param user the user to add
      * @return true if the user is successfully added, false otherwise
      */
     public boolean addUser(User user) {
         return this.usersList.add(user);
     }
-    
+
     /**
      * Add an user to the usersList.
-     * 
+     *
      * @param nickname the nickname of the user to add
      * @param email the email of the user to add
      * @return true if the user is successfully added, false otherwise
      */
-    public boolean addUser(String nickname, String email){
+    public boolean addUser(String nickname, String email) {
         User user = new User(nickname, email);
         return this.usersList.add(user);
     }
-    
+
+    /**
+     * Checks if usersList has a user.
+     *
+     * @param user the user to check
+     * @return true if the userList has user, false otherwise
+     */
+    public boolean hasUser(User user) {
+
+        return this.usersList.contains(user);
+    }
+
+    /**
+     * Checks if usersList has a user.
+     *
+     * @param nickname the nickname of a user to check
+     * @return true if the userList has user, false otherwise
+     */
+    public boolean hasUser(String nickname) {
+
+        User user = new User();
+        user.setNickname(nickname);
+
+        return this.usersList.contains(user);
+    }
+
     /**
      * Add a city to the citiesList.
-     * 
+     *
      * @param city the city to add
      * @return true if the city is successfully added, false otherwise
      */
     public boolean addCity(City city) {
         return this.citiesList.add(city);
     }
-    
+
     /**
      * Add a city to the citiesList.
-     * 
+     *
      * @param coordinates city's coordinates to set the new city
      * @param name city's name to set the new city
      * @param points city's points to set the new city
      * @return true if the city is successfully added, false otherwise
      */
-    public boolean addCity(Pair<Double, Double> coordinates, String name, int points){
+    public boolean addCity(Pair<Double, Double> coordinates, String name, int points) {
         City city = new City(coordinates, name, points);
         return this.citiesList.add(city);
     }
@@ -167,7 +192,7 @@ public class SocialNetwork {
         StringBuilder s = new StringBuilder();
         s.append("UsersList{");
         for (User user : this.usersList) {
-            s.append(String.format("%s%n", user));
+            s.append(String.format("%s%n", user.getNickname()));
         }
         s.append("}");
         s.append("CitiesList{");

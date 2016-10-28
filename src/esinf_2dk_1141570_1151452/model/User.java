@@ -186,8 +186,8 @@ public class User {
 
         final User other = (User) obj;
 
-        return this.nickname.equals(other.nickname)
-                || this.email.equals(other.email);
+        return this.nickname.equalsIgnoreCase(other.nickname)
+                || this.email.equalsIgnoreCase(other.email);
         // We do OR in this case, because we can't have users with same email or nickname.
     }
 
