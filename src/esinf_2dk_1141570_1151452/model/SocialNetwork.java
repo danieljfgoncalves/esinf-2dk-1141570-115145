@@ -135,6 +135,8 @@ public class SocialNetwork {
                 removedCorrectly = false;
             }
         }
+        
+        updateMayors();
 
         return this.usersList.remove(user) && removedCorrectly;
     }
@@ -168,6 +170,8 @@ public class SocialNetwork {
                 removedCorrectly = false;
             }
         }
+        
+        updateMayors();
 
         return this.usersList.remove(user) && removedCorrectly;
     }
