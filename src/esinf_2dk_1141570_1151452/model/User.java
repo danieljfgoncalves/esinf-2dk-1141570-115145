@@ -87,7 +87,7 @@ public class User {
 
     /**
      * Returns the user's nickname.
-     * 
+     *
      * @return user's nickname
      */
     public String getNickname() {
@@ -96,7 +96,7 @@ public class User {
 
     /**
      * Sets the user's nickname.
-     * 
+     *
      * @param nickname user's nickname
      */
     public void setNickname(String nickname) {
@@ -105,7 +105,7 @@ public class User {
 
     /**
      * Returns the user's email.
-     * 
+     *
      * @return user's email
      */
     public String getEmail() {
@@ -114,7 +114,7 @@ public class User {
 
     /**
      * Sets the user's email.
-     * 
+     *
      * @param email user's email
      */
     public void setEmail(String email) {
@@ -123,7 +123,7 @@ public class User {
 
     /**
      * Returns the user's visited cities list.
-     * 
+     *
      * @return user's visited cities list
      */
     public LinkedList<City> getVisitedCities() {
@@ -132,7 +132,7 @@ public class User {
 
     /**
      * Sets the user's visited cities list.
-     * 
+     *
      * @param visitedCities user's visited cities list
      */
     public void setVisitedCities(List<City> visitedCities) {
@@ -141,7 +141,7 @@ public class User {
 
     /**
      * Returns the user's friends list.
-     * 
+     *
      * @return user's friends list
      */
     public Set<User> getFriends() {
@@ -150,49 +150,63 @@ public class User {
 
     /**
      * Sets the user's friends list.
-     * 
+     *
      * @param friends user's friends list
      */
     public void setFriends(Set<User> friends) {
         this.friends = new HashSet<>(friends);
     }
-    
+
     //METHODS
     /**
+     * Adds a friendship connection.
+     *
+     * @param friend the friend to connect
+     * @return true if the friendship connection is successfully added, false
+     * otherwise
+     */
+    public boolean addFriendship(User friend) {
+
+        return this.friends.add(friend)
+                && friend.friends.add(this);
+    }
+
+    /**
      * Removes friend(user) from the usersList
-     * 
+     *
      * @param friend the friend(user) to remove
      * @return true if the friend(user) is successfully removed, false otherwise
      */
-    public boolean removeFriendship(User friend){
+    public boolean removeFriendship(User friend) {
         return this.friends.remove(friend) && friend.friends.remove(this);
     }
-    
+
     /**
-     * Checks the user in a new city and set up the user as Mayor if
-     * he has more points than the current Mayor.
-     * 
+     * Checks the user in a new city and set up the user as Mayor if he has more
+     * points than the current Mayor.
+     *
      * @param city the new city where the user checks in
      * @return true if the user checks in a new city, false otherwise
      */
-    public boolean checkInAnewCity(City city){
+    public boolean checkInAnewCity(City city) {
         if (this.visitedCities.isEmpty() || !(this.visitedCities.getLast().equals(city))) {
             this.visitedCities.add(city);
             if ((this.pointsInAgivenCity(city)) >= (city.getMayor().pointsInAgivenCity(city))) {
                 city.setMayor(this);
             }
-            return true;    
+            return true;
         }
         return false;
     }
-    
+
     /**
      * Obtains the points of the user in a given city.
-     * 
-     * @param givenCity the given city to check how much points of the user has in it
+     *
+     * @param givenCity the given city to check how much points of the user has
+     * in it
      * @return the points of the user has in a given city
      */
-    public int pointsInAgivenCity(City givenCity){
+    public int pointsInAgivenCity(City givenCity) {
         int points = 0;
         for (City visitedCity : visitedCities) {
             if (visitedCity.equals(givenCity)) {
@@ -201,14 +215,14 @@ public class User {
         }
         return points;
     }
-    
+
     /**
      * Obtain the friends of the user in a given location(coordinates).
-     * 
+     *
      * @param coordinates the coordinates from the given location
      * @return the friends of the user in a given location(coordinates).
      */
-    public HashSet<User> userFriendsInAGivenLocation(Pair <Double, Double> coordinates){
+    public HashSet<User> userFriendsInAGivenLocation(Pair<Double, Double> coordinates) {
         HashSet<User> friendsByCoordenates = new HashSet<>();
         for (User friend : this.friends) {
             if (friend.getVisitedCities().getLast().getCoordinates().equals(coordinates)) {
@@ -253,7 +267,7 @@ public class User {
         for (City city : visitedCities) {
             buffer.append(String.format("%t%s%n", city.getName()));
         }
-        
+
         buffer.append("Friends:%n");
         for (User friend : friends) {
             buffer.append(String.format("%t%s%n", friend.getNickname()));
