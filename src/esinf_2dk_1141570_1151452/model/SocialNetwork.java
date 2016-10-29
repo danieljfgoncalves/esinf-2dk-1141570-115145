@@ -131,18 +131,16 @@ public class SocialNetwork {
      */
     public boolean removeUser(User user) {
 
-        boolean removedCorrectly = true;
-
         for (User friend : user.getFriends()) {
 
-            if (!user.removeFriendship(friend)) {
-                removedCorrectly = false;
-            }
+            user.removeFriendship(friend);
         }
+
+        boolean removedCorrectly = this.usersList.remove(user);
 
         updateMayors(user.getVisitedCities()); // Only updates the cities where the user passed.
 
-        return this.usersList.remove(user) && removedCorrectly;
+        return removedCorrectly;
     }
 
     /**
@@ -152,8 +150,6 @@ public class SocialNetwork {
      * @return true if the user is successfully removed, false otherwise
      */
     public boolean removeUser(String nickname) {
-
-        boolean removedCorrectly = true;
 
         // Find user with received nickname in users list.
         User user = null;
@@ -170,14 +166,14 @@ public class SocialNetwork {
 
         for (User friend : user.getFriends()) {
 
-            if (!user.removeFriendship(friend)) {
-                removedCorrectly = false;
-            }
+            user.removeFriendship(friend);
         }
+
+        boolean removedCorrectly = this.usersList.remove(user);
 
         updateMayors(user.getVisitedCities()); // Only updates the cities where the user passed.
 
-        return this.usersList.remove(user) && removedCorrectly;
+        return removedCorrectly;
     }
 
     /**
@@ -254,10 +250,9 @@ public class SocialNetwork {
             @Override
             public int compare(City c1, City c2) {
 
-                
                 // Order by mayor points.
-                int ptsMayor1 = c1.getMayor().pointsInAgivenCity(c1);
-                int ptsMayor2 = c2.getMayor().pointsInAgivenCity(c2);
+                int ptsMayor1 = c1.getMayor().totalScore();
+                int ptsMayor2 = c2.getMayor().totalScore();
                 // Tiebreak most influential user.
                 int numFriends1 = c1.getMayor().getFriends().size();
                 int numFriends2 = c2.getMayor().getFriends().size();
