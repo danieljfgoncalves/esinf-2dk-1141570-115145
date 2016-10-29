@@ -1,7 +1,10 @@
 package esinf_2dk_1141570_1151452.model;
 
+import esinf_2dk_1141570_1151452.utils.Algorithms;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -135,7 +138,7 @@ public class SocialNetwork {
                 removedCorrectly = false;
             }
         }
-        
+
         updateMayors();
 
         return this.usersList.remove(user) && removedCorrectly;
@@ -170,7 +173,7 @@ public class SocialNetwork {
                 removedCorrectly = false;
             }
         }
-        
+
         updateMayors();
 
         return this.usersList.remove(user) && removedCorrectly;
@@ -262,6 +265,54 @@ public class SocialNetwork {
         }
 
         return map;
+    }
+
+    /**
+     * Returns a list of the most influential users.
+     * 
+     * @return a list of the most influential users.
+     */
+    public Set<User> getInfluentialUsers() {
+
+        Set influentialUsers = new HashSet<User>();
+
+        if (usersList.size() > 0) {
+
+            // Order by mer
+            LinkedList<User> orderedList = new LinkedList(Algorithms.mergeSort(usersList, new Comparator<User>() {
+                
+                @Override
+                public int compare(User u1, User u2) { // Compares how many friends. (Descending order)
+
+                    int num1 = u1.getFriends().size();
+                    int num2 = u2.getFriends().size();
+
+                    return num1 == num2 ? 0 : num1 < num2 ? 1 : -1;
+                }
+            }));
+            // We could have used Collections.sort() because it already uses merge sort
+            // algorithm, but for the purpose of this subject we implemented our own merge sort
+            // algorithm.
+
+            Iterator it = orderedList.iterator();
+            // First influential user.
+            User first = (User) it.next();
+            // First influential user number of friends.
+            int n = first.getFriends().size();
+            // Add to the set.
+            influentialUsers.add(first);
+
+            while (it.hasNext()) {
+                User nextUser = (User) it.next();
+
+                if (nextUser.getFriends().size() != n) {
+
+                    return influentialUsers;
+                }
+            }
+        }
+
+        return influentialUsers;
     }
 
     @Override
