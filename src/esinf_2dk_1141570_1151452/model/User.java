@@ -1,6 +1,7 @@
 package esinf_2dk_1141570_1151452.model;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -230,6 +231,34 @@ public class User {
             }
         }
         return points;
+    }
+    
+    /**
+     * Obtains the total points of the user for his visited cities.
+     * 
+     *
+     * @return the total points of the user.
+     */
+    public int totalScore() {
+        
+        StringBuilder output = new StringBuilder(
+                String.format("%s has visted the following cities (chronologic order): %n", 
+                        this.nickname));
+        
+        int i = 0, score = 0;
+        Iterator it = this.visitedCities.iterator();
+        while (it.hasNext()) {
+            
+            City city = (City) it.next();
+            score += city.getPoints();
+            output.append(String.format("%d. - %s%n", ++i, city.getName()));
+        }
+        
+        // From our interpretation from the assignement we only need to print 
+        // the visited cities by order of check in.
+        System.out.println(output);
+        
+        return score;
     }
 
     /**
