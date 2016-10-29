@@ -192,9 +192,9 @@ public class User {
     public boolean checkInAnewCity(City city) {
         if (this.visitedCities.isEmpty() || !(this.visitedCities.getLast().equals(city))) {
             this.visitedCities.add(city);
-            
+
             this.isMayor(city);
-            
+
             return true;
         }
         return false;
@@ -209,7 +209,7 @@ public class User {
      */
     public boolean isMayor(City city) {
 
-        if ((this.pointsInAgivenCity(city)) > (city.getMayor().pointsInAgivenCity(city))) {
+        if ((this.pointsInAgivenCity(city)) >= (city.getMayor().pointsInAgivenCity(city))) {
             city.setMayor(this);
             return true;
         }
@@ -232,32 +232,32 @@ public class User {
         }
         return points;
     }
-    
+
     /**
      * Obtains the total points of the user for his visited cities.
-     * 
+     *
      *
      * @return the total points of the user.
      */
     public int totalScore() {
-        
+
         StringBuilder output = new StringBuilder(
-                String.format("%s has visted the following cities (chronologic order): %n", 
+                String.format("%s has visted the following cities (chronologic order): %n",
                         this.nickname));
-        
+
         int i = 0, score = 0;
         Iterator it = this.visitedCities.iterator();
         while (it.hasNext()) {
-            
+
             City city = (City) it.next();
             score += city.getPoints();
             output.append(String.format("%d. - %s%n", ++i, city.getName()));
         }
-        
+
         // From our interpretation from the assignement we only need to print 
         // the visited cities by order of check in.
         System.out.println(output);
-        
+
         return score;
     }
 

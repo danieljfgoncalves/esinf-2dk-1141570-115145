@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -139,7 +140,7 @@ public class SocialNetwork {
             }
         }
 
-        updateMayors();
+        updateMayors(user.getVisitedCities()); // Only updates the cities where the user passed.
 
         return this.usersList.remove(user) && removedCorrectly;
     }
@@ -174,7 +175,7 @@ public class SocialNetwork {
             }
         }
 
-        updateMayors();
+        updateMayors(user.getVisitedCities()); // Only updates the cities where the user passed.
 
         return this.usersList.remove(user) && removedCorrectly;
     }
@@ -229,9 +230,11 @@ public class SocialNetwork {
 
     /**
      * Updates mayors of each city in the cities list.
+     *
+     * @param cities list of citites.
      */
-    public void updateMayors() {
-        for (City city : citiesList) {
+    public void updateMayors(List<City> cities) {
+        for (City city : cities) {
             for (User user : usersList) {
 
                 user.isMayor(city);
@@ -251,11 +254,18 @@ public class SocialNetwork {
             @Override
             public int compare(City c1, City c2) {
 
+                
+                // Order by mayor points.
                 int ptsMayor1 = c1.getMayor().pointsInAgivenCity(c1);
                 int ptsMayor2 = c2.getMayor().pointsInAgivenCity(c2);
+                // Tiebreak most influential user.
+                int numFriends1 = c1.getMayor().getFriends().size();
+                int numFriends2 = c2.getMayor().getFriends().size();
 
-                return ptsMayor1 == ptsMayor2 ? 0
-                        : ptsMayor1 > ptsMayor2 ? -1 : 1; // switched for descending order
+                return ptsMayor1 == ptsMayor2
+                        ? (numFriends1 == numFriends2) ? 0 : (numFriends1 > numFriends2) ? -1 : 1
+                        : ptsMayor1 > ptsMayor2 ? -1 : 1;
+                // switched for descending order
             }
         });
 
@@ -269,18 +279,18 @@ public class SocialNetwork {
 
     /**
      * Returns a list of the most influential users.
-     * 
+     *
      * @return a list of the most influential users.
      */
     public Set<User> getInfluentialUsers() {
 
-        Set influentialUsers = new HashSet<User>();
+        Set<User> influentialUsers = new HashSet<User>();
 
         if (usersList.size() > 0) {
 
-            // Order by mer
+            // Order by merge sort
             LinkedList<User> orderedList = new LinkedList(Algorithms.mergeSort(usersList, new Comparator<User>() {
-                
+
                 @Override
                 public int compare(User u1, User u2) { // Compares how many friends. (Descending order)
 
@@ -309,6 +319,7 @@ public class SocialNetwork {
 
                     return influentialUsers;
                 }
+                influentialUsers.add(nextUser);
             }
         }
 

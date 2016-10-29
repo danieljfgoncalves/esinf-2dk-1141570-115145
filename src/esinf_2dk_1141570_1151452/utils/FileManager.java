@@ -183,7 +183,22 @@ public class FileManager {
 
                         User newUser = new User(attributes[0], attributes[1]);
                         for (int j = 2; j < attributes.length; j++) {
-                            // TODO: Implement check in.
+
+                            boolean found = false;
+                            City visitedCity = null;
+
+                            Iterator<City> citySearch = socialNetwork.getCitiesList().iterator();
+                            while (citySearch.hasNext() && !found) {
+
+                                visitedCity = citySearch.next();
+
+                                if (visitedCity.getName().equalsIgnoreCase(attributes[j])) {
+                                    found = true;
+                                }
+                            }
+                            if (found) {
+                                newUser.checkInAnewCity(visitedCity);
+                            }
                         }
                         newUsers.add(newUser);
 
@@ -229,8 +244,7 @@ public class FileManager {
                         found = !found;
                     }
                 }
-                // TODO: Implement add friendship
-                // user.addFriend(friend)
+                user.addFriendship(friend);
             }
             socialNetwork.addUser(user);
         }
@@ -285,7 +299,7 @@ public class FileManager {
                         city.getName(),
                         city.getPoints(),
                         city.getCoordinates().getKey().doubleValue(),
-                        city.getCoordinates().getValue());
+                        city.getCoordinates().getValue().doubleValue());
 
                 output.write(line);
             }
@@ -350,7 +364,7 @@ public class FileManager {
         }
         return saved;
     }
-    
+
     /**
      * Saves users & cities to a text file from a social network object.
      *
@@ -369,8 +383,6 @@ public class FileManager {
 
             System.out.println("Some cities/users may not be saved correctly.");
         }
-        
-        socialNetwork.updateMayors();
 
         return (savedCities && savedUsers);
     }
