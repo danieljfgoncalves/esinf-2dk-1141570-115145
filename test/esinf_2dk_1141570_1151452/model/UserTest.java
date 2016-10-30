@@ -5,6 +5,7 @@
  */
 package esinf_2dk_1141570_1151452.model;
 
+import esinf_2dk_1141570_1151452.utils.FileManager;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,6 +23,11 @@ import static org.junit.Assert.*;
  * @author Eric Jorge Schipper Ferreira do Amaral 1141570@isep.ipp.pt TurmaDN
  */
 public class UserTest {
+
+    /**
+     * Social Network object to test with 10 cities & 10 users.
+     */
+    SocialNetwork sn10;
 
     /**
      * User object for testing.
@@ -53,6 +59,10 @@ public class UserTest {
         friends.add(friend3);
 
         testUser.setFriends(friends);
+
+        sn10 = FileManager.loadSocialNetwork(
+                FileManager.defaultCitiesFile(FileManager.DEFAULT_TEN),
+                FileManager.defaultUsersFile(FileManager.DEFAULT_TEN));
 
     }
 
@@ -453,13 +463,27 @@ public class UserTest {
     @Test
     public void testUserFriendsInAGivenLocation_Pair() {
         System.out.println("userFriendsInAGivenLocation");
-        Pair<Double, Double> coordinates = null;
-        User instance = new User();
-        HashSet<User> expResult = null;
-        HashSet<User> result = instance.userFriendsInAGivenLocation(coordinates);
+
+        User userTest = new User();
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick0")) {
+                userTest = user1;
+            }
+        }
+
+        Set<User> expResult = new HashSet<>();
+        for (User user1 : userTest.getFriends()) {
+            if (!user1.getNickname().equals("nick7")) {
+                expResult.add(user1);
+            }
+        }
+
+        Pair coordenates = new Pair(40.781886, -8.697502);
+
+        Set<User> result = new HashSet<>();
+        result = userTest.userFriendsInAGivenLocation(coordenates);
+
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -468,13 +492,27 @@ public class UserTest {
     @Test
     public void testUserFriendsInAGivenLocation_City() {
         System.out.println("userFriendsInAGivenLocation");
-        City city = null;
-        User instance = new User();
-        HashSet<User> expResult = null;
-        HashSet<User> result = instance.userFriendsInAGivenLocation(city);
+
+        User userTest = new User();
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick0")) {
+                userTest = user1;
+            }
+        }
+
+        Set<User> expResult = new HashSet<>();
+        for (User user1 : userTest.getFriends()) {
+            if (!user1.getNickname().equals("nick7")) {
+                expResult.add(user1);
+            }
+        }
+
+        City city8 = new City(new Pair(40.781886, -8.697502), "city8", 7);
+
+        Set<User> result = new HashSet<>();
+        result = userTest.userFriendsInAGivenLocation(city8);
+
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
