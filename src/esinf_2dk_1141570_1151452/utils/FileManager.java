@@ -105,7 +105,7 @@ public class FileManager {
      *
      * @return true if all cities are loaded correctly.
      */
-    static boolean loadCities(SocialNetwork socialNetwork, String filepath) {
+    private static boolean loadCities(SocialNetwork socialNetwork, String filepath) {
 
         boolean loaded = true;
 
@@ -161,7 +161,7 @@ public class FileManager {
      *
      * @return true if all users are loaded correctly.
      */
-    static boolean loadUsers(SocialNetwork socialNetwork, String filepath) {
+    private static boolean loadUsers(SocialNetwork socialNetwork, String filepath) {
 
         boolean loaded = true;
 
@@ -286,7 +286,7 @@ public class FileManager {
      *
      * @return true if all cities are saved correctly.
      */
-    static boolean saveCities(SocialNetwork socialNetwork, String filepath) {
+    private static boolean saveCities(SocialNetwork socialNetwork, String filepath) {
 
         boolean saved = true;
 
@@ -327,7 +327,7 @@ public class FileManager {
      *
      * @return true if all users are saved correctly.
      */
-    static boolean saveUsers(SocialNetwork socialNetwork, String filepath) {
+    private static boolean saveUsers(SocialNetwork socialNetwork, String filepath) {
 
         boolean saved = true;
 
@@ -378,6 +378,10 @@ public class FileManager {
      */
     public static boolean saveSocialNetwork(SocialNetwork socialNetwork, String citiesFilePath, String usersFilePath) {
 
+        if (socialNetwork == null) {
+            return false;
+        }
+        
         boolean savedCities = saveCities(socialNetwork, citiesFilePath);
         boolean savedUsers = saveUsers(socialNetwork, usersFilePath);
 

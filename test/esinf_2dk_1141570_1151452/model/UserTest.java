@@ -8,13 +8,8 @@ package esinf_2dk_1141570_1151452.model;
 import esinf_2dk_1141570_1151452.utils.FileManager;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 import javafx.util.Pair;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
