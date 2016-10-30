@@ -2,11 +2,13 @@ package esinf_2dk_1141570_1151452.model;
 
 import esinf_2dk_1141570_1151452.utils.FileManager;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javafx.util.Pair;
+import static org.hamcrest.CoreMatchers.is;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -456,13 +458,13 @@ public class SocialNetworkTest {
     @Test
     public void testUpdateMayors() {
         System.out.println("updateMayors");
-        
+
         Set<City> cities1 = new HashSet<>();
         cities1.add(new City(new Pair(41.243345, -8.674084), "city0", 28));
         cities1.add(new City(new Pair(41.237364, -8.846746), "city1", 72));
         cities1.add(new City(new Pair(40.519841, -8.085113), "city2", 81));
         cities1.add(new City(new Pair(41.118700, -8.589700), "city3", 42));
-        
+
         Set<City> cities2 = new HashSet<>();
         City city0 = (new City(new Pair(41.243345, -8.674084), "city0", 28));
         city0.setMayor(new User("nick2", "mail_2_@sapo.pt"));
@@ -476,7 +478,7 @@ public class SocialNetworkTest {
         City city3 = (new City(new Pair(41.118700, -8.589700), "city3", 42));
         cities2.add(city3);
         city3.setMayor(new User("nick8", "mail_8_@sapo.pt"));
-        
+
         SocialNetwork sn = new SocialNetwork(sn10.getUsersList(), cities1);
         sn.updateMayors();
 
@@ -499,28 +501,207 @@ public class SocialNetworkTest {
      * Test of listMayors method, of class SocialNetwork.
      */
     @Test
-    public void testListMayors() {
+    public void testListMayors01() {
         System.out.println("listMayors");
-        SocialNetwork instance = new SocialNetwork();
-        Map expResult = null;
-        Map result = instance.listMayors();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Map expResult = new LinkedHashMap();
+
+        City city1 = (new City(new Pair(41.237364, -8.846746), "city1", 72));
+        city1.setMayor(new User("nick6", "mail_6_@sapo.pt"));
+        expResult.put(city1, city1.getMayor());
+
+        City city5 = (new City(new Pair(41.337408, -8.291943), "city5", 74));
+        city5.setMayor(new User("nick6", "mail_6_@sapo.pt"));
+        expResult.put(city5, city5.getMayor());
+
+        City city6 = (new City(new Pair(41.314965, -8.423371), "city6", 80));
+        city6.setMayor(new User("nick0", "mail_0_@sapo.pt"));
+        expResult.put(city6, city6.getMayor());
+
+        City city3 = (new City(new Pair(41.118700, -8.589700), "city3", 42));
+        city3.setMayor(new User("nick8", "mail_8_@sapo.pt"));
+        expResult.put(city3, city3.getMayor());
+
+        City city4 = (new City(new Pair(41.467407, -8.964340), "city4", 64));
+        city4.setMayor(new User("nick8", "mail_8_@sapo.pt"));
+        expResult.put(city4, city4.getMayor());
+
+        City city0 = (new City(new Pair(41.243345, -8.674084), "city0", 28));
+        city0.setMayor(new User("nick2", "mail_2_@sapo.pt"));
+        expResult.put(city0, city0.getMayor());
+
+        City city2 = (new City(new Pair(40.519841, -8.085113), "city2", 81));
+        city2.setMayor(new User("nick2", "mail_2_@sapo.pt"));
+        expResult.put(city2, city2.getMayor());
+
+        City city7 = (new City(new Pair(40.822244, -8.794953), "city7", 11));
+        city7.setMayor(new User("nick5", "mail_5_@sapo.pt"));
+        expResult.put(city7, city7.getMayor());
+
+        City city9 = (new City(new Pair(40.851360, -8.136585), "city9", 65));
+        city9.setMayor(new User("nick5", "mail_5_@sapo.pt"));
+        expResult.put(city9, city9.getMayor());
+
+        City city8 = (new City(new Pair(40.781886, -8.697502), "city8", 7));
+        city8.setMayor(new User("nick3", "mail_3_@sapo.pt"));
+        expResult.put(city8, city8.getMayor());
+
+        Map result = sn10.listMayors();
+
+        // To compare Keys.
+        assertArrayEquals(expResult.keySet().toArray(), result.keySet().toArray());
+    }
+
+    /**
+     * Test of listMayors method, of class SocialNetwork.
+     */
+    @Test
+    public void testListMayors02() {
+        System.out.println("listMayors");
+
+        Map expResult = new LinkedHashMap();
+
+        City city1 = (new City(new Pair(41.237364, -8.846746), "city1", 72));
+        city1.setMayor(new User("nick6", "mail_6_@sapo.pt"));
+        expResult.put(city1, city1.getMayor());
+
+        City city5 = (new City(new Pair(41.337408, -8.291943), "city5", 74));
+        city5.setMayor(new User("nick6", "mail_6_@sapo.pt"));
+        expResult.put(city5, city5.getMayor());
+
+        City city6 = (new City(new Pair(41.314965, -8.423371), "city6", 80));
+        city6.setMayor(new User("nick0", "mail_0_@sapo.pt"));
+        expResult.put(city6, city6.getMayor());
+
+        City city3 = (new City(new Pair(41.118700, -8.589700), "city3", 42));
+        city3.setMayor(new User("nick8", "mail_8_@sapo.pt"));
+        expResult.put(city3, city3.getMayor());
+
+        City city4 = (new City(new Pair(41.467407, -8.964340), "city4", 64));
+        city4.setMayor(new User("nick8", "mail_8_@sapo.pt"));
+        expResult.put(city4, city4.getMayor());
+
+        City city0 = (new City(new Pair(41.243345, -8.674084), "city0", 28));
+        city0.setMayor(new User("nick2", "mail_2_@sapo.pt"));
+        expResult.put(city0, city0.getMayor());
+
+        City city2 = (new City(new Pair(40.519841, -8.085113), "city2", 81));
+        city2.setMayor(new User("nick2", "mail_2_@sapo.pt"));
+        expResult.put(city2, city2.getMayor());
+
+        City city7 = (new City(new Pair(40.822244, -8.794953), "city7", 11));
+        city7.setMayor(new User("nick5", "mail_5_@sapo.pt"));
+        expResult.put(city7, city7.getMayor());
+
+        City city9 = (new City(new Pair(40.851360, -8.136585), "city9", 65));
+        city9.setMayor(new User("nick5", "mail_5_@sapo.pt"));
+        expResult.put(city9, city9.getMayor());
+
+        City city8 = (new City(new Pair(40.781886, -8.697502), "city8", 7));
+        city8.setMayor(new User("nick3", "mail_3_@sapo.pt"));
+        expResult.put(city8, city8.getMayor());
+
+        Map result = sn10.listMayors();
+
+        // To compare Values.
+        assertArrayEquals(expResult.values().toArray(), result.values().toArray());
+    }
+
+    /**
+     * Test of listMayors method, of class SocialNetwork.
+     */
+    @Test
+    public void testListMayors03() {
+        System.out.println("listMayors");
+
+        Map expResult = new LinkedHashMap();
+
+        City city1 = (new City(new Pair(41.237364, -8.846746), "city1", 72));
+        city1.setMayor(new User("nick6", "mail_6_@sapo.pt"));
+        expResult.put(city1, city1.getMayor());
+
+        City city5 = (new City(new Pair(41.337408, -8.291943), "city5", 74));
+        city5.setMayor(new User("nick6", "mail_6_@sapo.pt"));
+        expResult.put(city5, city5.getMayor());
+
+        City city6 = (new City(new Pair(41.314965, -8.423371), "city6", 80));
+        city6.setMayor(new User("nick0", "mail_0_@sapo.pt"));
+        expResult.put(city6, city6.getMayor());
+
+        City city3 = (new City(new Pair(41.118700, -8.589700), "city3", 42));
+        city3.setMayor(new User("nick8", "mail_8_@sapo.pt"));
+        expResult.put(city3, city3.getMayor());
+
+        City city4 = (new City(new Pair(41.467407, -8.964340), "city4", 64));
+        city4.setMayor(new User("nick8", "mail_8_@sapo.pt"));
+        expResult.put(city4, city4.getMayor());
+
+        City city0 = (new City(new Pair(41.243345, -8.674084), "city0", 28));
+        city0.setMayor(new User("nick2", "mail_2_@sapo.pt"));
+        expResult.put(city0, city0.getMayor());
+
+        City city2 = (new City(new Pair(40.519841, -8.085113), "city2", 81));
+        city2.setMayor(new User("nick2", "mail_2_@sapo.pt"));
+        expResult.put(city2, city2.getMayor());
+
+        City city7 = (new City(new Pair(40.822244, -8.794953), "city7", 11));
+        city7.setMayor(new User("nick5", "mail_5_@sapo.pt"));
+        expResult.put(city7, city7.getMayor());
+
+        City city9 = (new City(new Pair(40.851360, -8.136585), "city9", 65));
+        city9.setMayor(new User("nick5", "mail_5_@sapo.pt"));
+        expResult.put(city9, city9.getMayor());
+
+        City city8 = (new City(new Pair(40.781886, -8.697502), "city8", 7));
+        city8.setMayor(new User("nick3", "mail_3_@sapo.pt"));
+        expResult.put(city8, city8.getMayor());
+
+        Map result = new LinkedHashMap(sn10.listMayors());
+
+        // To compare Values.
+        assertThat(result, is(expResult));
     }
 
     /**
      * Test of getInfluentialUsers method, of class SocialNetwork.
      */
     @Test
-    public void testGetInfluentialUsers() {
+    public void testGetInfluentialUsers01() {
         System.out.println("getInfluentialUsers");
-        SocialNetwork instance = new SocialNetwork();
-        Set<User> expResult = null;
-        Set<User> result = instance.getInfluentialUsers();
+
+        Set<User> expResult = new HashSet<>();
+        expResult.add(new User("nick3", "mail_3_@sapo.pt"));
+        expResult.add(new User("nick5", "mail_5_@sapo.pt"));
+        expResult.add(new User("nick8", "mail_8_@sapo.pt"));
+
+        Set<User> result = sn10.getInfluentialUsers();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getInfluentialUsers method, of class SocialNetwork.
+     */
+    @Test
+    public void testGetInfluentialUsers02() {
+        System.out.println("getInfluentialUsers");
+
+        Set<User> expResult = new HashSet<>();
+        expResult.add(new User("nick99", "mail_99_@sapo.pt"));
+        Set<User> result = sn100.getInfluentialUsers();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getInfluentialUsers method, of class SocialNetwork.
+     */
+    @Test
+    public void testGetInfluentialUsers03() {
+        System.out.println("getInfluentialUsers");
+
+        Set<User> expResult = new HashSet<>();
+        expResult.add(new User("nick267", "mail_267_@sapo.pt"));
+        Set<User> result = sn300.getInfluentialUsers();
+        assertEquals(expResult, result);
     }
 
     /**

@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -209,7 +208,7 @@ public class SocialNetwork {
         City city = new City(coordinates, name, points);
         return this.citiesList.add(city);
     }
-    
+
     /**
      * Updates mayors of each city in the cities list.
      *
@@ -236,21 +235,28 @@ public class SocialNetwork {
             public int compare(City c1, City c2) {
 
                 // Order by mayor points.
-                int ptsMayor1 = c1.getMayor().totalScore();
-                int ptsMayor2 = c2.getMayor().totalScore();
+                int pts1 = c1.getMayor().totalScore();
+                int pts2 = c2.getMayor().totalScore();
                 // Tiebreak most influential user.
-                int numFriends1 = c1.getMayor().getFriends().size();
-                int numFriends2 = c2.getMayor().getFriends().size();
+                int num1 = c1.getMayor().getFriends().size();
+                int num2 = c2.getMayor().getFriends().size();
+                // If still tied order by city name (this will guarantee that no map.key is equal)
+                String name1 = c1.getName();
+                String name2 = c2.getName();
 
-                return ptsMayor1 == ptsMayor2
-                        ? (numFriends1 == numFriends2) ? 0 : (numFriends1 > numFriends2) ? -1 : 1
-                        : ptsMayor1 > ptsMayor2 ? -1 : 1;
+                return pts1 == pts2
+                        ? (num1 == num2)
+                                ? name1.compareToIgnoreCase(name2)
+                                // (name descending order, 0 will not happen because city names are unique) 
+                                : (num1 > num2) ? -1 : 1
+                        : pts1 > pts2 ? -1 : 1;
                 // switched for descending order
             }
         });
 
         for (City city : citiesList) {
 
+            int score = city.getMayor().totalScore();
             map.put(city, city.getMayor());
         }
 
