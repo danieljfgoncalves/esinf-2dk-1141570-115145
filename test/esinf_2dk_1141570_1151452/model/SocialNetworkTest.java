@@ -423,33 +423,169 @@ public class SocialNetworkTest {
     /**
      * Test of addCity method, of class SocialNetwork.
      */
-//    @Test (ERIC)
-    public void testAddCity_City() {
+    @Test
+    public void testAddCity_City01() {
+
         System.out.println("addCity");
-        City city = null;
-        SocialNetwork instance = new SocialNetwork();
-        boolean expResult = false;
-        boolean result = instance.addCity(city);
+        City cityTest = new City(new Pair(41.200000, -8.000000), "cityTest", 30);
+        Set<City> expResult = new HashSet<>();
+
+        expResult.add(new City(new Pair(41.243345, -8.674084), "city0", 28));
+        expResult.add(new City(new Pair(41.237364, -8.846746), "city1", 72));
+        expResult.add(new City(new Pair(40.519841, -8.085113), "city2", 81));
+        expResult.add(new City(new Pair(41.118700, -8.589700), "city3", 42));
+        expResult.add(new City(new Pair(41.467407, -8.964340), "city4", 64));
+        expResult.add(new City(new Pair(41.337408, -8.291943), "city5", 74));
+        expResult.add(new City(new Pair(41.314965, -8.423371), "city6", 80));
+        expResult.add(new City(new Pair(40.822244, -8.794953), "city7", 11));
+        expResult.add(new City(new Pair(40.781886, -8.697502), "city8", 7));
+        expResult.add(new City(new Pair(40.851360, -8.136585), "city9", 65));
+        expResult.add(cityTest);
+
+        sn10.addCity(cityTest);
+        Set<City> result = sn10.getCitiesList();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of addCity method, of class SocialNetwork.
      */
-//    @Test  (ERIC)
-    public void testAddCity_3args() {
+    @Test
+    public void testAddCity_City02() {
+
         System.out.println("addCity");
-        Pair<Double, Double> coordinates = null;
-        String name = "";
-        int points = 0;
-        SocialNetwork instance = new SocialNetwork();
-        boolean expResult = false;
-        boolean result = instance.addCity(coordinates, name, points);
+        City cityTest = new City(new Pair(41.200000, -8.000000), "cityTest", 30);
+
+        boolean result = sn10.addCity(cityTest);
+        assertTrue(result);
+    }
+
+    /**
+     * Test of addCity method, of class SocialNetwork.
+     */
+    @Test
+    public void testAddCity_City03() {
+
+        System.out.println("addCity");
+        City cityTest = new City(new Pair(41.243345, -8.674084), "city0", 28);
+        Set<City> expResult = new HashSet<>();
+
+        expResult.add(new City(new Pair(41.243345, -8.674084), "city0", 28));
+        expResult.add(new City(new Pair(41.237364, -8.846746), "city1", 72));
+        expResult.add(new City(new Pair(40.519841, -8.085113), "city2", 81));
+        expResult.add(new City(new Pair(41.118700, -8.589700), "city3", 42));
+        expResult.add(new City(new Pair(41.467407, -8.964340), "city4", 64));
+        expResult.add(new City(new Pair(41.337408, -8.291943), "city5", 74));
+        expResult.add(new City(new Pair(41.314965, -8.423371), "city6", 80));
+        expResult.add(new City(new Pair(40.822244, -8.794953), "city7", 11));
+        expResult.add(new City(new Pair(40.781886, -8.697502), "city8", 7));
+        expResult.add(new City(new Pair(40.851360, -8.136585), "city9", 65));
+
+        sn10.addCity(cityTest);
+        Set<City> result = sn10.getCitiesList();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addCity method, of class SocialNetwork.
+     */
+    @Test
+    public void testAddCity_City04() {
+
+        System.out.println("addCity");
+        City cityTest = new City(new Pair(41.243345, -8.674084), "city0", 28);
+
+        boolean result = sn10.addCity(cityTest);
+        assertFalse(result);
+    }
+
+    /**
+     * Test of addCity method, of class SocialNetwork.
+     */
+    @Test
+    public void testAddCity_3args01() {
+
+        System.out.println("addCity_3args");
+        String cityName = "cityTest";
+        Pair coordenates = new Pair(41.200000, -8.000000);
+        int points = 30;
+        City cityTest = new City(coordenates, cityName, points);
+        Set<City> expResult = new HashSet<>();
+
+        expResult.add(new City(new Pair(41.243345, -8.674084), "city0", 28));
+        expResult.add(new City(new Pair(41.237364, -8.846746), "city1", 72));
+        expResult.add(new City(new Pair(40.519841, -8.085113), "city2", 81));
+        expResult.add(new City(new Pair(41.118700, -8.589700), "city3", 42));
+        expResult.add(new City(new Pair(41.467407, -8.964340), "city4", 64));
+        expResult.add(new City(new Pair(41.337408, -8.291943), "city5", 74));
+        expResult.add(new City(new Pair(41.314965, -8.423371), "city6", 80));
+        expResult.add(new City(new Pair(40.822244, -8.794953), "city7", 11));
+        expResult.add(new City(new Pair(40.781886, -8.697502), "city8", 7));
+        expResult.add(new City(new Pair(40.851360, -8.136585), "city9", 65));
+        expResult.add(cityTest);
+
+        sn10.addCity(coordenates, cityName, points);
+        Set<City> result = sn10.getCitiesList();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of addCity method, of class SocialNetwork.
+     */
+    @Test
+    public void testAddCity_3args02() {
+
+        System.out.println("addCity_3args");
+        String cityName = "cityTest";
+        Pair coordenates = new Pair(41.200000, -8.000000);
+        int points = 30;
+
+        boolean result = sn10.addCity(coordenates, cityName, points);
+        assertTrue(result);
+    }
+
+    /**
+     * Test of addCity method, of class SocialNetwork.
+     */
+    @Test
+    public void testAddCity_3args03() {
+
+        System.out.println("addCity_3args");
+        String cityName = "city0";
+        Pair coordenates = new Pair(41.243345, -8.674084);
+        int points = 28;
+        City cityTest = new City(coordenates, cityName, points);
+        Set<City> expResult = new HashSet<>();
+
+        expResult.add(new City(new Pair(41.243345, -8.674084), "city0", 28));
+        expResult.add(new City(new Pair(41.237364, -8.846746), "city1", 72));
+        expResult.add(new City(new Pair(40.519841, -8.085113), "city2", 81));
+        expResult.add(new City(new Pair(41.118700, -8.589700), "city3", 42));
+        expResult.add(new City(new Pair(41.467407, -8.964340), "city4", 64));
+        expResult.add(new City(new Pair(41.337408, -8.291943), "city5", 74));
+        expResult.add(new City(new Pair(41.314965, -8.423371), "city6", 80));
+        expResult.add(new City(new Pair(40.822244, -8.794953), "city7", 11));
+        expResult.add(new City(new Pair(40.781886, -8.697502), "city8", 7));
+        expResult.add(new City(new Pair(40.851360, -8.136585), "city9", 65));
+
+        sn10.addCity(coordenates, cityName, points);
+        Set<City> result = sn10.getCitiesList();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of addCity method, of class SocialNetwork.
+     */
+    @Test
+    public void testAddCity_3args04() {
+
+        System.out.println("addCity_3args");
+        String cityName = "city0";
+        Pair coordenates = new Pair(41.243345, -8.674084);
+        int points = 28;
+
+        boolean result = sn10.addCity(coordenates, cityName, points);
+        assertFalse(result);
     }
 
     /**
