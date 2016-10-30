@@ -1,6 +1,7 @@
 package esinf_2dk_1141570_1151452.model;
 
 import esinf_2dk_1141570_1151452.utils.Algorithms;
+import esinf_2dk_1141570_1151452.utils.FileManager;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -259,7 +260,6 @@ public class SocialNetwork {
             int score = city.getMayor().totalScore();
             map.put(city, city.getMayor());
         }
-
         return map;
     }
 
