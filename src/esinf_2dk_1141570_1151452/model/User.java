@@ -209,7 +209,14 @@ public class User {
      */
     public boolean isMayor(City city) {
 
-        if ((this.pointsInAgivenCity(city)) >= (city.getMayor().pointsInAgivenCity(city))) {
+        int userPoints = this.pointsInAgivenCity(city);
+        int mayorPoints = city.getMayor().pointsInAgivenCity(city);
+
+        if (userPoints > mayorPoints) {
+            city.setMayor(this);
+            return true;
+        } else if (userPoints == mayorPoints
+                && this.getFriends().size() > city.getMayor().getFriends().size()) {
             city.setMayor(this);
             return true;
         }
@@ -326,12 +333,12 @@ public class User {
 
         buffer.append("Visited Cities:%n");
         for (City city : visitedCities) {
-            buffer.append(String.format("%t%s%n", city.getName()));
+            buffer.append(String.format("%s%n", city.getName()));
         }
 
         buffer.append("Friends:%n");
         for (User friend : friends) {
-            buffer.append(String.format("%t%s%n", friend.getNickname()));
+            buffer.append(String.format("%s%n", friend.getNickname()));
         }
         buffer.append("}");
 

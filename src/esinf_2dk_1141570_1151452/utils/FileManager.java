@@ -37,32 +37,32 @@ public class FileManager {
     /**
      * Constant to represent default files with 10 elements.
      */
-    static final String DEFAULT_TEN = "10";
+    public static final String DEFAULT_TEN = "10";
 
     /**
      * Constant to represent default files with 15 elements.
      */
-    static final String DEFAULT_FIFTEEN = "15";
+    public static final String DEFAULT_FIFTEEN = "15";
 
     /**
      * Constant to represent default files with 20 elements.
      */
-    static final String DEFAULT_TWENTY = "20";
+    public static final String DEFAULT_TWENTY = "20";
 
     /**
      * Constant to represent default files with 30 elements.
      */
-    static final String DEFAULT_THRITY = "30";
+    public static final String DEFAULT_THRITY = "30";
 
     /**
      * Constant to represent default files with 100 elements.
      */
-    static final String DEFAULT_ONE_HUNDRED = "100";
+    public static final String DEFAULT_ONE_HUNDRED = "100";
 
     /**
      * Constant to represent default files with 300 elements.
      */
-    static final String DEFAULT_THREE_HUNDRED = "300";
+    public static final String DEFAULT_THREE_HUNDRED = "300";
 
     /**
      * Obtain a default cities file path.
@@ -248,6 +248,8 @@ public class FileManager {
             }
             socialNetwork.addUser(user);
         }
+        
+        socialNetwork.updateMayors();
 
         return loaded;
     }

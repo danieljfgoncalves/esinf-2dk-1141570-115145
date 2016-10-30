@@ -24,12 +24,12 @@ public class SocialNetwork {
     /**
      * SocialNetwork's users list
      */
-    private Set<User> usersList;
+    private HashSet<User> usersList;
 
     /**
      * SocialNetwork's cities list
      */
-    private Set<City> citiesList;
+    private HashSet<City> citiesList;
 
     //CONSTRUCTORS
     /**
@@ -70,7 +70,7 @@ public class SocialNetwork {
      * @return the SocialNetwork's usersList
      */
     public Set<User> getUsersList() {
-        return this.usersList;
+        return new HashSet<User>(this.usersList);
     }
 
     /**
@@ -79,7 +79,7 @@ public class SocialNetwork {
      * @param usersList the SocialNetwork's usersList to set
      */
     public void setUsersList(Set<User> usersList) {
-        this.usersList = usersList;
+        this.usersList = new HashSet<User>(usersList);
     }
 
     /**
@@ -88,7 +88,7 @@ public class SocialNetwork {
      * @return the SocialNetwork's citiesList
      */
     public Set<City> getCitiesList() {
-        return this.citiesList;
+        return new HashSet<City>(this.citiesList);
     }
 
     /**
@@ -97,7 +97,7 @@ public class SocialNetwork {
      * @param citiesList the SocialNetwork's citiesList to set
      */
     public void setCitiesList(Set<City> citiesList) {
-        this.citiesList = citiesList;
+        this.citiesList = new HashSet<City>(citiesList);
     }
 
     //METHODS
@@ -138,7 +138,7 @@ public class SocialNetwork {
 
         boolean removedCorrectly = this.usersList.remove(user);
 
-        updateMayors(user.getVisitedCities()); // Only updates the cities where the user passed.
+        updateMayors();
 
         return removedCorrectly;
     }
@@ -171,7 +171,7 @@ public class SocialNetwork {
 
         boolean removedCorrectly = this.usersList.remove(user);
 
-        updateMayors(user.getVisitedCities()); // Only updates the cities where the user passed.
+        updateMayors();
 
         return removedCorrectly;
     }
@@ -183,20 +183,6 @@ public class SocialNetwork {
      * @return true if the userList has user, false otherwise
      */
     public boolean hasUser(User user) {
-
-        return this.usersList.contains(user);
-    }
-
-    /**
-     * Checks if usersList has a user.
-     *
-     * @param nickname the nickname of a user to check
-     * @return true if the userList has user, false otherwise
-     */
-    public boolean hasUser(String nickname) {
-
-        User user = new User();
-        user.setNickname(nickname);
 
         return this.usersList.contains(user);
     }
@@ -223,14 +209,13 @@ public class SocialNetwork {
         City city = new City(coordinates, name, points);
         return this.citiesList.add(city);
     }
-
+    
     /**
      * Updates mayors of each city in the cities list.
      *
-     * @param cities list of citites.
      */
-    public void updateMayors(List<City> cities) {
-        for (City city : cities) {
+    public void updateMayors() {
+        for (City city : citiesList) {
             for (User user : usersList) {
 
                 user.isMayor(city);

@@ -159,15 +159,13 @@ public class City {
     public void setMayor(User mayor) {
         this.mayor = mayor;
     }
-    
+
     //METHODS
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 11 * hash + Objects.hashCode(this.name);
-        hash = 11 * hash + this.points;
-        hash = 11 * hash + Objects.hashCode(this.coordinates);
-        hash = 11 * hash + Objects.hashCode(this.mayor);
+        hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Objects.hashCode(this.coordinates);
         return hash;
     }
 
