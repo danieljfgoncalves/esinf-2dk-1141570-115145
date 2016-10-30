@@ -184,7 +184,6 @@ public class UserTest {
     public void testAddFriendship02() {
         System.out.println("addFriendship");
 
-        Set<User> expResult = new HashSet<>();
         User friendTest = new User("nick3", "mail_3_@sapo.pt");
 
         boolean result = testUser.addFriendship(friendTest);
@@ -216,11 +215,27 @@ public class UserTest {
     public void testAddFriendship04() {
         System.out.println("addFriendship");
 
-        Set<User> expResult = new HashSet<>();
         User friendTest = new User("nick2", "mail_2_@sapo.pt");
 
         boolean result = testUser.addFriendship(friendTest);
         assertFalse(result);
+    }
+
+    /**
+     * Test of addFriendship method, of class User.
+     */
+    @Test
+    public void testAddFriendship05() {
+        System.out.println("addFriendship");
+
+        User friendTest = new User("nick3", "mail_3_@sapo.pt");
+
+        Set<User> expResult = new HashSet<>();
+        expResult.add(testUser);
+
+        testUser.addFriendship(friendTest);
+        Set<User> result = friendTest.getFriends();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -230,13 +245,12 @@ public class UserTest {
     public void testRemoveFriendship01() {
         System.out.println("removeFriendship");
 
+        User friendTest = new User("nick0", "mail_0_@sapo.pt");
+
         Set<User> expResult = new HashSet<>();
-        User friendTest = new User("nick3", "mail_3_@sapo.pt");
-        expResult.add(new User("nick0", "mail_0_@sapo.pt"));
         expResult.add(new User("nick1", "mail_1_@sapo.pt"));
         expResult.add(new User("nick2", "mail_2_@sapo.pt"));
 
-        testUser.addFriendship(friendTest);
         testUser.removeFriendship(friendTest);
         Set<User> result = testUser.getFriends();
         assertEquals(expResult, result);
@@ -249,7 +263,6 @@ public class UserTest {
     public void testRemoveFriendship02() {
         System.out.println("removeFriendship");
 
-        Set<User> expResult = new HashSet<>();
         User friendTest = new User("nick3", "mail_3_@sapo.pt");
 
         testUser.addFriendship(friendTest);
@@ -266,7 +279,7 @@ public class UserTest {
         System.out.println("removeFriendship");
 
         Set<User> expResult = new HashSet<>();
-        User friendTest = new User("nick3", "mail_3_@sapo.pt");
+        User friendTest = new User("test", "test@sapo.pt");
         expResult.add(new User("nick0", "mail_0_@sapo.pt"));
         expResult.add(new User("nick1", "mail_1_@sapo.pt"));
         expResult.add(new User("nick2", "mail_2_@sapo.pt"));
@@ -283,11 +296,29 @@ public class UserTest {
     public void testRemoveFriendship04() {
         System.out.println("removeFriendship");
 
-        Set<User> expResult = new HashSet<>();
-        User friendTest = new User("nick3", "mail_3_@sapo.pt");
+        User friendTest = new User("test", "test@sapo.pt");
 
         boolean result = testUser.removeFriendship(friendTest);
         assertFalse(result);
+    }
+
+    /**
+     * Test of removeFriendship method, of class User.
+     */
+    @Test
+    public void testRemoveFriendship05() {
+        System.out.println("removeFriendship");
+
+        User user = new User("nick0", "mail_0_@sapo.pt");
+        User friend = new User("nick3", "mail_3_@sapo.pt");
+
+        Set<User> expResult = new HashSet<>();
+        expResult.add(new User("nick7", "mail_7_@sapo.pt"));
+        expResult.add(new User("nick4", "mail_4_@sapo.pt"));
+
+        user.removeFriendship(friend);
+        Set<User> result = friend.getFriends();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -297,8 +328,9 @@ public class UserTest {
     public void testCheckInAnewCity01() {
         System.out.println("checkInAnewCity");
 
-        LinkedList<City> expResult = new LinkedList<>();
         City cityTest = new City(new Pair(41.118700, -8.589700), "city3", 42);
+
+        LinkedList<City> expResult = new LinkedList<>();
         expResult.add(new City(new Pair(41.243345, -8.674084), "city0", 28));
         expResult.add(new City(new Pair(41.237364, -8.846746), "city1", 72));
         expResult.add(new City(new Pair(40.519841, -8.085113), "city2", 81));
@@ -330,8 +362,9 @@ public class UserTest {
     public void testCheckInAnewCity03() {
         System.out.println("checkInAnewCity");
 
-        LinkedList<City> expResult = new LinkedList<>();
         City cityTest = new City(new Pair(40.519841, -8.085113), "city2", 81);
+
+        LinkedList<City> expResult = new LinkedList<>();
         expResult.add(new City(new Pair(41.243345, -8.674084), "city0", 28));
         expResult.add(new City(new Pair(41.237364, -8.846746), "city1", 72));
         expResult.add(new City(new Pair(40.519841, -8.085113), "city2", 81));
@@ -362,8 +395,10 @@ public class UserTest {
     public void testCheckInAnewCity05() {
         System.out.println("checkInAnewCity");
 
-        LinkedList<City> expResult = new LinkedList<>();
         City cityTest = new City(new Pair(40.519841, -8.085113), "city2", 81);
+
+        LinkedList<City> expResult = new LinkedList<>();
+        expResult.add(new City(new Pair(41.237364, -8.846746), "city1", 72));
         expResult.add(new City(new Pair(40.519841, -8.085113), "city2", 81));
 
         testUser.setVisitedCities(new LinkedList<>());
