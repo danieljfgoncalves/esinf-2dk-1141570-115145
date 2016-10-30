@@ -319,14 +319,19 @@ public class UserTest {
     public void testRemoveFriendship05() {
         System.out.println("removeFriendship");
 
-        User user = new User("nick0", "mail_0_@sapo.pt");
-        User friend = new User("nick3", "mail_3_@sapo.pt");
+        Set<User> friendsOfFriend = new HashSet<>();
+        friendsOfFriend.add(new User("nick7", "mail_7_@sapo.pt"));
+        friendsOfFriend.add(new User("nick4", "mail_4_@sapo.pt"));
+        friendsOfFriend.add(testUser);
+
+        User friend = new User("nick0", "mail_0_@sapo.pt");
+        friend.setFriends(friendsOfFriend);
 
         Set<User> expResult = new HashSet<>();
         expResult.add(new User("nick7", "mail_7_@sapo.pt"));
         expResult.add(new User("nick4", "mail_4_@sapo.pt"));
 
-        user.removeFriendship(friend);
+        testUser.removeFriendship(friend);
         Set<User> result = friend.getFriends();
         assertEquals(expResult, result);
     }
@@ -411,7 +416,7 @@ public class UserTest {
         expResult.add(new City(new Pair(41.237364, -8.846746), "city1", 72));
         expResult.add(new City(new Pair(40.519841, -8.085113), "city2", 81));
 
-        testUser.setVisitedCities(new LinkedList<>());
+        testUser.setVisitedCities(expResult);
         testUser.checkInAnewCity(cityTest);
 
         LinkedList<City> result = testUser.getVisitedCities();
@@ -549,15 +554,46 @@ public class UserTest {
      * Test of isMayor method, of class User.
      */
     @Test
-    public void testIsMayor() {
+    public void testIsMayor01() {
         System.out.println("isMayor");
-        City city = null;
-        User instance = new User();
-        boolean expResult = false;
-        boolean result = instance.isMayor(city);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        User userTest = new User();
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick3")) {
+                userTest = user1;
+            }
+        }
+        
+        City city8 = new City(new Pair(40.781886, -8.697502), "city8", 7);
+        city8.setMayor(testUser);
+
+        boolean result = userTest.isMayor(city8);
+        assertTrue(result);
+    }
+
+    /**
+     * Test of isMayor method, of class User.
+     */
+    @Test
+    public void testIsMayor02() {
+        System.out.println("isMayor");
+
+        User userTest = new User();
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick3")) {
+                userTest = user1;
+            }
+        }
+
+        City city = new City();
+        for (City city1 : sn10.getCitiesList()) {
+            if (city1.getName().equals("city0")) {
+                city = city1;
+            }
+        }
+
+        boolean result = userTest.isMayor(city);
+        assertFalse(result);
     }
 
     /**
