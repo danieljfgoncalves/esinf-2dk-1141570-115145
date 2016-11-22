@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package esinf_2dk_1141570_1151452.model;
+package model;
 
-import esinf_2dk_1141570_1151452.utils.FileManager;
+import model.User;
+import model.SocialNetwork;
+import model.City;
+import utils.FileManager;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;

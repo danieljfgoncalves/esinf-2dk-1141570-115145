@@ -1,8 +1,9 @@
-package esinf_2dk_1141570_1151452.utils;
+package utils;
 
-import esinf_2dk_1141570_1151452.model.City;
-import esinf_2dk_1141570_1151452.model.SocialNetwork;
-import esinf_2dk_1141570_1151452.model.User;
+import utils.FileManager;
+import model.City;
+import model.SocialNetwork;
+import model.User;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

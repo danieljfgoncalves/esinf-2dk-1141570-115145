@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package esinf_2dk_1141570_1151452.utils;
+package utils;
 
 import java.util.Arrays;
 import java.util.Comparator;

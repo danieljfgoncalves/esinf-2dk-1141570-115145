@@ -1,5 +1,6 @@
-package esinf_2dk_1141570_1151452.utils;
+package utils;
 
+import utils.Algorithms;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

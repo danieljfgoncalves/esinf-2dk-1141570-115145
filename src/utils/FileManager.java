@@ -1,8 +1,8 @@
-package esinf_2dk_1141570_1151452.utils;
+package utils;
 
-import esinf_2dk_1141570_1151452.model.City;
-import esinf_2dk_1141570_1151452.model.SocialNetwork;
-import esinf_2dk_1141570_1151452.model.User;
+import model.City;
+import model.SocialNetwork;
+import model.User;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

@@ -1,5 +1,7 @@
-package esinf_2dk_1141570_1151452.model;
+package model;
 
+import model.User;
+import model.City;
 import javafx.util.Pair;
 import org.junit.Test;
 import static org.junit.Assert.*;

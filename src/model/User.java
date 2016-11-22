@@ -1,4 +1,4 @@
-package esinf_2dk_1141570_1151452.model;
+package model;
 
 import java.util.HashSet;
 import java.util.Iterator;
