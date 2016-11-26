@@ -116,7 +116,7 @@ public class MatrixGraph<V, E> implements MatrixGraphInterface<V, E>, Cloneable 
     public MatrixGraph() {
         this(INITIAL_CAPACITY);
     }
-
+    
     /**
      * Constructs a matrix graph with an initial capacity.
      *

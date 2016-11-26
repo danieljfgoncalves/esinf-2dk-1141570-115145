@@ -195,9 +195,4 @@ public class MatrixGraphAlgorithmsTest {
 		
 		assertTrue("There should not be paths between Porto and Faro in the incomplete map", paths.isEmpty());
 	}
-
-	@Test
-	public void testTransitiveClosure() {
-		fail("Not implemented yet.");	
-	}
 }

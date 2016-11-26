@@ -1,7 +1,8 @@
 package model;
 
+import graphs.map.MapGraph;
+import graphs.matrix.MatrixGraph;
 import utils.Algorithms;
-import utils.FileManager;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -31,6 +32,16 @@ public class SocialNetwork {
      */
     private HashSet<City> citiesList;
 
+    /**
+     * Social Network cities Graph
+     */
+    private MatrixGraph<City, Double> citiesGraph;
+    
+    /**
+     * Social Network friendships Graph
+     */
+    private MapGraph<User, Integer> friendshipGraph;
+
     //CONSTRUCTORS
     /**
      * builds up an instance of SocialNetwork with parameters by default
@@ -38,6 +49,8 @@ public class SocialNetwork {
     public SocialNetwork() {
         this.usersList = new HashSet<User>();
         this.citiesList = new HashSet<City>();
+        this.citiesGraph = new MatrixGraph<>();
+        this.friendshipGraph = new MapGraph<>();
     }
 
     /**
@@ -49,6 +62,8 @@ public class SocialNetwork {
     public SocialNetwork(SocialNetwork otherSN) {
         this.usersList = new HashSet<User>(otherSN.usersList);
         this.citiesList = new HashSet<City>(otherSN.citiesList);
+        this.citiesGraph = new MatrixGraph<>();
+        this.friendshipGraph = new MapGraph<>();
     }
 
     /**
@@ -61,6 +76,8 @@ public class SocialNetwork {
     public SocialNetwork(Set usersList, Set citiesList) {
         this.usersList = new HashSet<User>(usersList);
         this.citiesList = new HashSet<City>(citiesList);
+        this.citiesGraph = new MatrixGraph<>();
+        this.friendshipGraph = new MapGraph<>();
     }
 
     //GETTERS AND SETTERS
@@ -98,6 +115,38 @@ public class SocialNetwork {
      */
     public void setCitiesList(Set<City> citiesList) {
         this.citiesList = new HashSet<City>(citiesList);
+    }
+
+    /**
+     * Obtains the Social Network Cities Graph
+     * @return the citiesGraph
+     */
+    public MatrixGraph<City, Double> getCitiesGraph() {
+        return citiesGraph;
+    }
+
+    /**
+     * Sets the Social Network Cities Graph
+     * @param citiesGraph the citiesGraph to set
+     */
+    public void setCitiesGraph(MatrixGraph<City, Double> citiesGraph) {
+        this.citiesGraph = citiesGraph;
+    }
+
+    /**
+     * Obtains the Social Network Friendships Graph
+     * @return the friendshipGraph
+     */
+    public MapGraph<User, Integer> getFriendshipGraph() {
+        return friendshipGraph;
+    }
+
+    /**
+     * Sets the Social Network Friendships Graph
+     * @param friendshipGraph the friendshipGraph to set
+     */
+    public void setFriendshipGraph(MapGraph<User, Integer> friendshipGraph) {
+        this.friendshipGraph = friendshipGraph;
     }
 
     //METHODS

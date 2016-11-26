@@ -188,12 +188,7 @@ public class MatrixGraphTest {
         assertTrue("in degree should be zero", (instance.outDegree("Vert 3") == 0));
 
     }
-
-    @Test
-    public void testDirectConnections() {
-        fail("Not implemented yet");
-    }
-
+    
     @Test
     public void testIncomingEdges() {
         System.out.println("Test of Incoming Edges");
