@@ -9,7 +9,7 @@ import graphs.matrix.MatrixGraph;
  * @author Eric Jorge Schipper Ferreira do Amaral 1141570@isep.ipp.pt
  */
 public class CitiesMatrix {
-    
+
     /**
      * Graph that contains all cities.
      */
@@ -21,20 +21,20 @@ public class CitiesMatrix {
     public CitiesMatrix() {
         this.graph = new MatrixGraph();
     }
-    
+
     /**
-     * Constructs a cities matrix graph receiving the graph 
-     * 
+     * Constructs a cities matrix graph receiving the graph
+     *
      * @param graph graph with cities
      */
     public CitiesMatrix(MatrixGraph graph) {
         this.graph = graph;
     }
-    
+
     /**
      * Copy constructor of a cities matrix graph
-     * 
-     * @param citiesMatrix  cities matrix to copy
+     *
+     * @param citiesMatrix cities matrix to copy
      */
     public CitiesMatrix(CitiesMatrix citiesMatrix) {
         this.graph = citiesMatrix.graph;
@@ -42,6 +42,7 @@ public class CitiesMatrix {
 
     /**
      * Obtains the Graph that contains all cities.
+     *
      * @return the graph
      */
     public MatrixGraph getGraph() {
@@ -50,11 +51,11 @@ public class CitiesMatrix {
 
     /**
      * Sets the Graph that contains all cities.
+     *
      * @param graph the graph to set
      */
     public void setGraph(MatrixGraph graph) {
         this.graph = graph;
     }
-    
-    
+
 }

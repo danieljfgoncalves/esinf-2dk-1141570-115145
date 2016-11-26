@@ -1,10 +1,7 @@
 package model;
 
-import graphs.map.Edge;
 import graphs.map.MapGraph;
 import graphs.matrix.MatrixGraph;
-import graphs.matrix.MatrixGraphAlgorithms;
-import java.util.ArrayList;
 import utils.Algorithms;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -38,8 +35,8 @@ public class SocialNetwork {
     /**
      * Social Network cities Graph
      */
-    private CitiesMatrix citiesGraph;
-    
+    private CitiesMatrix citiesMatrix;
+
     /**
      * Social Network friendships MapGraph
      */
@@ -52,7 +49,7 @@ public class SocialNetwork {
     public SocialNetwork() {
         this.usersList = new HashSet<>();
         this.citiesList = new HashSet<>();
-        this.citiesGraph = new CitiesMatrix();
+        this.citiesMatrix = new CitiesMatrix();
         this.friendshipMap = new FriendshipMap(false);
     }
 
@@ -62,10 +59,10 @@ public class SocialNetwork {
      *
      * @param otherSN SocialNetwork to copy
      */
-    public SocialNetwork(SocialNetwork otherSN) {   
+    public SocialNetwork(SocialNetwork otherSN) {
         this.usersList = new HashSet<>(otherSN.usersList);
         this.citiesList = new HashSet<>(otherSN.citiesList);
-        this.citiesGraph = new CitiesMatrix(otherSN.citiesGraph);
+        this.citiesMatrix = new CitiesMatrix(otherSN.citiesMatrix);
         this.friendshipMap = new FriendshipMap(false);
 
     }
@@ -80,7 +77,7 @@ public class SocialNetwork {
     public SocialNetwork(Set usersList, Set citiesList) {
         this.usersList = new HashSet<>(usersList);
         this.citiesList = new HashSet<>(citiesList);
-        this.citiesGraph = new CitiesMatrix();
+        this.citiesMatrix = new CitiesMatrix();
         this.friendshipMap = new FriendshipMap(false);
     }
 
@@ -123,30 +120,34 @@ public class SocialNetwork {
 
     /**
      * Obtains the Social Network Cities Graph
-     * @return the citiesGraph
+     *
+     * @return the citiesMatrix
      */
     public CitiesMatrix getCitiesGraph() {
-        return citiesGraph;
+        return citiesMatrix;
     }
 
     /**
      * Sets the Social Network Cities Graph
+     *
      * @param matrix the cities matrix to set
      */
     public void setCitiesGraph(MatrixGraph<City, Double> matrix) {
-        this.citiesGraph = new CitiesMatrix(matrix);
+        this.citiesMatrix = new CitiesMatrix(matrix);
     }
-    
+
     /**
      * Sets the Social Network Cities Graph
+     *
      * @param citiesMatrix the cities matrix to set
      */
     public void setCitiesGraph(CitiesMatrix citiesMatrix) {
-        this.citiesGraph = new CitiesMatrix(citiesMatrix);
+        this.citiesMatrix = new CitiesMatrix(citiesMatrix);
     }
-    
+
     /**
      * Obtains the Social Network Friendship MapGraph
+     *
      * @return the FriendshipMapGraph
      */
     public FriendshipMap getFriendshipMap() {
@@ -155,20 +156,22 @@ public class SocialNetwork {
 
     /**
      * Sets the Social Network Friendship MapGraph
+     *
      * @param Map the Friendship MapGraph to set
      */
     public void setFriendshipMap(MapGraph Map) {
         this.friendshipMap = new FriendshipMap(Map);
     }
-    
+
     /**
      * Sets the Social Network Friendship MapGraph
+     *
      * @param FriendshipMap the Friendship MapGraph to set
      */
     public void setFriendshipMap(FriendshipMap FriendshipMap) {
         this.friendshipMap = new FriendshipMap(FriendshipMap);
     }
-    
+
     /**
      * Add an user to the usersList.
      *
