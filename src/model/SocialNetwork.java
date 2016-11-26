@@ -169,6 +169,8 @@ public class SocialNetwork {
         this.friendshipMap = new FriendshipMap(FriendshipMap);
     }
     
+    
+    
     /**
      * Add an user to the usersList.
      *
