@@ -1,5 +1,6 @@
 package utils;
 
+import graphs.matrix.MatrixGraph;
 import model.City;
 import model.SocialNetwork;
 import model.User;
@@ -248,7 +249,7 @@ public class FileManager {
             }
             socialNetwork.addUser(user);
         }
-        
+
         socialNetwork.updateMayors();
 
         return loaded;
@@ -277,6 +278,75 @@ public class FileManager {
         return sn;
     }
 
+    // **** 2nd PART **** //
+    public static void loadCitiesGraph(SocialNetwork sn, String filePath) {
+
+        MatrixGraph<City, Double> citiesGraph = new MatrixGraph();
+
+        // Load Cities from preloaded file (1st Part)
+        for (City city : sn.getCitiesList()) {
+
+            citiesGraph.insertVertex(city);
+        }
+
+        try {
+            // Read Cities Connections File
+            input = new BufferedReader(new FileReader(filePath));
+
+            String line;
+            while ((line = input.readLine()) != null) {
+
+                // [0]-First City;[1]-Second City;[2]-Distance
+                String[] attributes = line.split(",");
+
+                // Instantiate cities and search in graph
+                boolean aExists = false, bExists = false;
+                City cityA = null, cityB = null;
+                Iterator<City> it = citiesGraph.vertices().iterator();
+                while(it.hasNext() && (!aExists || !bExists)) {
+                    
+                    City city = it.next();
+                    
+                    if (city.getName().equals(attributes[0])) {
+                        cityA = city;
+                        aExists = true;
+                    } else if (city.getName().equals(attributes[1])) {
+                        cityB = city;
+                        bExists = true;
+                    }
+                }
+
+                try {
+                    // Throw exception if either of the cities don't exist
+                    if (cityA == null || cityB == null) {
+
+                        throw new IllegalArgumentException("Invalid Connection!");
+                    }
+
+                    // Add connection only if both cities exist
+                    citiesGraph.insertEdge(cityA, cityB, Double.parseDouble(attributes[2]));
+                } catch (IllegalArgumentException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("File not found.\n Error: " + ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println("Something went wrong\nError: " + ex.getMessage());
+        } finally {
+            try {
+                input.close();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        
+        // Save cities graph in social network
+        sn.setCitiesGraph(citiesGraph);
+    }
+
+    // ***************** //
     // Write Files
     /**
      * Saves cities to a text file from a social network object.
@@ -381,7 +451,7 @@ public class FileManager {
         if (socialNetwork == null) {
             return false;
         }
-        
+
         boolean savedCities = saveCities(socialNetwork, citiesFilePath);
         boolean savedUsers = saveUsers(socialNetwork, usersFilePath);
 

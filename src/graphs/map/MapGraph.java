@@ -13,6 +13,7 @@ import java.util.TreeMap;
  * @param <E> the edge
  */
 public class MapGraph<V,E> implements MapGraphInterface<V,E> {
+
     
     /**
      * MapGraph's number of vertices

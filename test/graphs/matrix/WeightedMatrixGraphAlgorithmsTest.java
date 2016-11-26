@@ -114,10 +114,4 @@ public class WeightedMatrixGraphAlgorithmsTest {
         assertTrue("then Castelo Branco", it.next().compareTo("Castelo Branco") == 0);
 
     }
-
-    @Test
-    public void testMinDistGraph() {
-        fail("not implemented yet");
-    }
-
 }
