@@ -131,14 +131,15 @@ public class MapGraphAlgorithms {
     }
 
     /**
-     * Obtains the ArrayList with all paths from origin vertex to destination vertex
-     * 
+     * Obtains the ArrayList with all paths from origin vertex to destination
+     * vertex
+     *
      * @param <V> vertex
      * @param <E> edge
      * @param graph the graph
      * @param vOrig the origin vertex
      * @param vDest the destination vertex
-     * 
+     *
      * @return paths the ArrayList with all paths from vOrig to vDest
      */
     public static <V, E> ArrayList<LinkedList<V>> allPaths(MapGraph<V, E> graph, V vOrig, V vDest) {
@@ -162,57 +163,149 @@ public class MapGraphAlgorithms {
     }
 
     /**
-     * Computes shortest-path distance from a source vertex to all reachable
-     * vertices of a graph g with nonnegative edge weights This implementation
-     * uses Dijkstra's algorithm
+     * Computes shortest path distance from origin vertex (source vertex) to all
+     * reachable vertices of a graph with nonnegative edge weights. This
+     * implementation uses Dijkstra's algorithm
      *
-     * @param g Graph instance
-     * @param vOrig Vertex that will be the source of the path
-     * @param visited set of discovered vertices
+     * @param graph Graph instance
+     * @param vOrig origin vertex that will be the source of the path
+     * @param visited set of visited vertices
      * @param pathkeys minimum path vertices keys
-     * @param dist minimum distances
+     * @param dist array of doubles of minimum distances
      */
-    private static <V, E> void shortestPathLength(MapGraph<V, E> g, V vOrig, V[] vertices,
+    private static <V, E> void shortestPathLength(MapGraph<V, E> graph, V vOrig, V[] vertices,
             boolean[] visited, int[] pathKeys, double[] dist) {
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        for (V v : vertices) {
+            dist[graph.getKey(v)] = Double.POSITIVE_INFINITY;
+            pathKeys[graph.getKey(v)] = -1;
+            visited[graph.getKey(v)] = false;
+        }
+
+        dist[graph.getKey(vOrig)] = 0;
+
+        while (vOrig != null) {
+            int vOrigValue = graph.getKey(vOrig);
+            visited[vOrigValue] = true;
+
+            for (Edge<V, E> edge : graph.outgoingEdges(vOrig)) {
+                V vAdj = graph.opposite(vOrig, edge);
+                if (!visited[graph.getKey(vAdj)] && dist[graph.getKey(vAdj)] > dist[vOrigValue] + edge.getWeight()) {
+                    dist[graph.getKey(vAdj)] = dist[vOrigValue] + edge.getWeight();
+                    pathKeys[graph.getKey(vAdj)] = vOrigValue;
+                }
+            }
+
+            vOrig = null;
+            double minimumDistance = Double.POSITIVE_INFINITY;
+
+            for (V ver : vertices) {
+                int vId = graph.getKey(ver);
+                if (visited[vId] == false && dist[vId] < minimumDistance) {
+                    vOrig = ver;
+                    minimumDistance = dist[vId];
+                }
+            }
+        }
     }
 
     /**
-     * Extracts from pathKeys the minimum path between voInf and vdInf The path
+     * Extracts from pathKeys the minimum path between vOrig and vDest. The path
      * is constructed from the end to the beginning
      *
-     * @param g Graph instance
-     * @param voInf information of the Vertex origin
-     * @param vdInf information of the Vertex destination
-     * @param pathkeys minimum path vertices keys
+     * @param graph Graph instance
+     * @param vOrig origin vertex
+     * @param vDest destination vertex
+     * @param pathkeys array of integers of minimum path vertices keys
      * @param path stack with the minimum path (correct order)
      */
-    private static <V, E> void getPath(MapGraph<V, E> g, V vOrig, V vDest, V[] verts, int[] pathKeys, LinkedList<V> path) {
+    private static <V, E> void getPath(MapGraph<V, E> graph, V vOrig, V vDest, V[] verts, int[] pathKeys, LinkedList<V> path) {
 
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        int vDestID = graph.getKey(vDest);
 
-    //shortest-path between voInf and vdInf
-    public static <V, E> double shortestPath(MapGraph<V, E> g, V vOrig, V vDest, LinkedList<V> shortPath) {
+        int prevID = pathKeys[vDestID];
+        V prevV = null;
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        for (V v : verts) {
+            if (graph.getKey(v) == prevID) {
+                prevV = v;
+            }
+        }
+        path.add(vDest);
+
+        if (!vOrig.equals(vDest)) {
+            getPath(graph, vOrig, prevV, verts, pathKeys, path);
+        }
     }
 
     /**
      * Reverses the path
      *
-     * @param path stack with path
+     * @param <V> vertex
+     * @param <E> edge
+     * @param path the linked list with vertices that represent a path that is
+     * passed as parameter to be reversed
+     *
+     * @return the reversed path
      */
     private static <V, E> LinkedList<V> revPath(LinkedList<V> path) {
 
-        LinkedList<V> pathcopy = new LinkedList<>(path);
-        LinkedList<V> pathrev = new LinkedList<>();
+        LinkedList<V> pathCopy = new LinkedList<>(path);
+        LinkedList<V> pathRev = new LinkedList<>();
 
-        while (!pathcopy.isEmpty()) {
-            pathrev.push(pathcopy.pop());
+        while (!pathCopy.isEmpty()) {
+            pathRev.push(pathCopy.pop());
         }
 
-        return pathrev;
+        return pathRev;
     }
+
+    /**
+     * Obtains shortest path distance from origin vertex (source vertex) to
+     * destination vertex.
+     *
+     * @param <V> vertex
+     * @param <E> edge
+     * @param graph the graph
+     * @param vOrig the origin vertex
+     * @param vDest the destination vertex
+     * @param shortPath the linked list with shortest path
+     *
+     * @return the shortest path distance from origin vertex (source vertex) to
+     * destination vertex.
+     */
+    public static <V, E> double shortestPath(MapGraph<V, E> graph, V vOrig, V vDest, LinkedList<V> shortPath) {
+
+        if (!graph.validVertex(vOrig) || !graph.validVertex(vDest)) {
+            return -1d;
+        }
+
+        int numVert = graph.numVertices();
+
+        V[] vertices = (V[]) graph.allkeyVerts().clone();
+        boolean visited[] = new boolean[numVert];
+        int[] pathKeys = new int[numVert];
+        double[] dist = new double[numVert];
+
+        shortestPathLength(graph, vOrig, vertices, visited, pathKeys, dist);
+        shortPath.clear();
+        if (!visited[graph.getKey(vDest)]) {
+            return -1d;
+        }
+        getPath(graph, vOrig, vDest, vertices, pathKeys, shortPath);
+
+        LinkedList<V> pathInOrder = revPath(shortPath);
+        shortPath.clear();
+        while (!pathInOrder.isEmpty()) {
+            shortPath.add(pathInOrder.removeFirst());
+        }
+
+        int vDestId = graph.getKey(vDest);
+        if (!visited[vDestId]) {
+            return -1d;
+        }
+
+        return dist[vDestId];
+    }
+
 }
