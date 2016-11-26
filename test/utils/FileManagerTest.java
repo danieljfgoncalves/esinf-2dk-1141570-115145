@@ -150,7 +150,7 @@ public class FileManagerTest {
         cities.add(new City(new Pair(40.851360, -8.136585), "city9", 65));
 
         Iterable<City> expResult = new LinkedList<>(cities);
-        Iterable<City> result = sn.getCitiesGraph().vertices();
+        Iterable<City> result = sn.getCitiesGraph().getGraph().vertices();
 
         assertEquals(expResult, result);
     }
@@ -215,7 +215,7 @@ public class FileManagerTest {
         expResult.insertEdge(city9, city6, 76.0);
         expResult.insertEdge(city9, city0, 75.0);
 
-        MatrixGraph<City, Double> result = sn.getCitiesGraph();
+        MatrixGraph<City, Double> result = sn.getCitiesGraph().getGraph();
 
         assertEquals(expResult, result);
     }
