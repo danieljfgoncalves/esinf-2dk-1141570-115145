@@ -40,7 +40,7 @@ public class SocialNetwork {
     /**
      * Social Network friendships Graph
      */
-    private MapGraph<User, Integer> friendshipGraph;
+    private MapGraph friendshipGraph;
 
     //CONSTRUCTORS
     /**
@@ -50,7 +50,7 @@ public class SocialNetwork {
         this.usersList = new HashSet<User>();
         this.citiesList = new HashSet<City>();
         this.citiesGraph = new MatrixGraph<>();
-        this.friendshipGraph = new MapGraph<>();
+        this.friendshipGraph = new MapGraph(false);
     }
 
     /**
@@ -63,7 +63,7 @@ public class SocialNetwork {
         this.usersList = new HashSet<User>(otherSN.usersList);
         this.citiesList = new HashSet<City>(otherSN.citiesList);
         this.citiesGraph = new MatrixGraph<>();
-        this.friendshipGraph = new MapGraph<>();
+        this.friendshipGraph = new MapGraph(false);
     }
 
     /**
@@ -77,7 +77,7 @@ public class SocialNetwork {
         this.usersList = new HashSet<User>(usersList);
         this.citiesList = new HashSet<City>(citiesList);
         this.citiesGraph = new MatrixGraph<>();
-        this.friendshipGraph = new MapGraph<>();
+        this.friendshipGraph = new MapGraph(false);
     }
 
     //GETTERS AND SETTERS
