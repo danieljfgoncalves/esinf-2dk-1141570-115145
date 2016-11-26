@@ -1,7 +1,10 @@
 package model;
 
+import graphs.map.Edge;
 import graphs.map.MapGraph;
 import graphs.matrix.MatrixGraph;
+import graphs.matrix.MatrixGraphAlgorithms;
+import java.util.ArrayList;
 import utils.Algorithms;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -38,9 +41,9 @@ public class SocialNetwork {
     private MatrixGraph<City, Double> citiesGraph;
     
     /**
-     * Social Network friendships Graph
+     * Social Network friendships MapGraph
      */
-    private MapGraph friendshipGraph;
+    private FriendshipMap friendshipMap;
 
     //CONSTRUCTORS
     /**
@@ -50,7 +53,7 @@ public class SocialNetwork {
         this.usersList = new HashSet<User>();
         this.citiesList = new HashSet<City>();
         this.citiesGraph = new MatrixGraph<>();
-        this.friendshipGraph = new MapGraph(false);
+        this.friendshipMap = new FriendshipMap(false);
     }
 
     /**
@@ -63,7 +66,7 @@ public class SocialNetwork {
         this.usersList = new HashSet<User>(otherSN.usersList);
         this.citiesList = new HashSet<City>(otherSN.citiesList);
         this.citiesGraph = new MatrixGraph<>();
-        this.friendshipGraph = new MapGraph(false);
+        this.friendshipMap = new FriendshipMap(false);
     }
 
     /**
@@ -77,7 +80,7 @@ public class SocialNetwork {
         this.usersList = new HashSet<User>(usersList);
         this.citiesList = new HashSet<City>(citiesList);
         this.citiesGraph = new MatrixGraph<>();
-        this.friendshipGraph = new MapGraph(false);
+        this.friendshipMap = new FriendshipMap(false);
     }
 
     //GETTERS AND SETTERS
@@ -132,24 +135,31 @@ public class SocialNetwork {
     public void setCitiesGraph(MatrixGraph<City, Double> citiesGraph) {
         this.citiesGraph = citiesGraph;
     }
-
+    
     /**
-     * Obtains the Social Network Friendships Graph
-     * @return the friendshipGraph
+     * Obtains the Social Network Friendship MapGraph
+     * @return the FriendshipMapGraph
      */
-    public MapGraph<User, Integer> getFriendshipGraph() {
-        return friendshipGraph;
+    public FriendshipMap getFriendshipMap() {
+        return this.friendshipMap;
     }
 
     /**
-     * Sets the Social Network Friendships Graph
-     * @param friendshipGraph the friendshipGraph to set
+     * Sets the Social Network Friendship MapGraph
+     * @param Map the Friendship MapGraph to set
      */
-    public void setFriendshipGraph(MapGraph<User, Integer> friendshipGraph) {
-        this.friendshipGraph = friendshipGraph;
+    public void setFriendshipMap(MapGraph Map) {
+        this.friendshipMap = new FriendshipMap(Map);
     }
-
-    //METHODS
+    
+    /**
+     * Sets the Social Network Friendship MapGraph
+     * @param FriendshipMap the Friendship MapGraph to set
+     */
+    public void setFriendshipMap(FriendshipMap FriendshipMap) {
+        this.friendshipMap = new FriendshipMap(FriendshipMap);
+    }
+    
     /**
      * Add an user to the usersList.
      *
