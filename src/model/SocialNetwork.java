@@ -38,7 +38,7 @@ public class SocialNetwork {
     /**
      * Social Network cities Graph
      */
-    private MatrixGraph<City, Double> citiesGraph;
+    private CitiesMatrix citiesGraph;
     
     /**
      * Social Network friendships MapGraph
@@ -50,9 +50,9 @@ public class SocialNetwork {
      * builds up an instance of SocialNetwork with parameters by default
      */
     public SocialNetwork() {
-        this.usersList = new HashSet<User>();
-        this.citiesList = new HashSet<City>();
-        this.citiesGraph = new MatrixGraph<>();
+        this.usersList = new HashSet<>();
+        this.citiesList = new HashSet<>();
+        this.citiesGraph = new CitiesMatrix();
         this.friendshipMap = new FriendshipMap(false);
     }
 
@@ -62,11 +62,12 @@ public class SocialNetwork {
      *
      * @param otherSN SocialNetwork to copy
      */
-    public SocialNetwork(SocialNetwork otherSN) {
-        this.usersList = new HashSet<User>(otherSN.usersList);
-        this.citiesList = new HashSet<City>(otherSN.citiesList);
-        this.citiesGraph = new MatrixGraph<>();
+    public SocialNetwork(SocialNetwork otherSN) {   
+        this.usersList = new HashSet<>(otherSN.usersList);
+        this.citiesList = new HashSet<>(otherSN.citiesList);
+        this.citiesGraph = new CitiesMatrix(otherSN.citiesGraph);
         this.friendshipMap = new FriendshipMap(false);
+
     }
 
     /**
@@ -77,9 +78,9 @@ public class SocialNetwork {
      * @param citiesList SocialNetwork's citiesList
      */
     public SocialNetwork(Set usersList, Set citiesList) {
-        this.usersList = new HashSet<User>(usersList);
-        this.citiesList = new HashSet<City>(citiesList);
-        this.citiesGraph = new MatrixGraph<>();
+        this.usersList = new HashSet<>(usersList);
+        this.citiesList = new HashSet<>(citiesList);
+        this.citiesGraph = new CitiesMatrix();
         this.friendshipMap = new FriendshipMap(false);
     }
 
@@ -90,7 +91,7 @@ public class SocialNetwork {
      * @return the SocialNetwork's usersList
      */
     public Set<User> getUsersList() {
-        return new HashSet<User>(this.usersList);
+        return new HashSet<>(this.usersList);
     }
 
     /**
@@ -99,7 +100,7 @@ public class SocialNetwork {
      * @param usersList the SocialNetwork's usersList to set
      */
     public void setUsersList(Set<User> usersList) {
-        this.usersList = new HashSet<User>(usersList);
+        this.usersList = new HashSet<>(usersList);
     }
 
     /**
@@ -108,7 +109,7 @@ public class SocialNetwork {
      * @return the SocialNetwork's citiesList
      */
     public Set<City> getCitiesList() {
-        return new HashSet<City>(this.citiesList);
+        return new HashSet<>(this.citiesList);
     }
 
     /**
@@ -117,23 +118,31 @@ public class SocialNetwork {
      * @param citiesList the SocialNetwork's citiesList to set
      */
     public void setCitiesList(Set<City> citiesList) {
-        this.citiesList = new HashSet<City>(citiesList);
+        this.citiesList = new HashSet<>(citiesList);
     }
 
     /**
      * Obtains the Social Network Cities Graph
      * @return the citiesGraph
      */
-    public MatrixGraph<City, Double> getCitiesGraph() {
+    public CitiesMatrix getCitiesGraph() {
         return citiesGraph;
     }
 
     /**
      * Sets the Social Network Cities Graph
-     * @param citiesGraph the citiesGraph to set
+     * @param matrix the cities matrix to set
      */
-    public void setCitiesGraph(MatrixGraph<City, Double> citiesGraph) {
-        this.citiesGraph = citiesGraph;
+    public void setCitiesGraph(MatrixGraph<City, Double> matrix) {
+        this.citiesGraph = new CitiesMatrix(matrix);
+    }
+    
+    /**
+     * Sets the Social Network Cities Graph
+     * @param citiesMatrix the cities matrix to set
+     */
+    public void setCitiesGraph(CitiesMatrix citiesMatrix) {
+        this.citiesGraph = new CitiesMatrix(citiesMatrix);
     }
     
     /**
