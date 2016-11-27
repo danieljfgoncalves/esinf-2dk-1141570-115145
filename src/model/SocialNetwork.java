@@ -411,7 +411,7 @@ public class SocialNetwork {
                 // go through friends to see if any is on the nearby city
                 for (User friend : friends) {
                     if (friend.getVisitedCities().getLast().equals(city)) {
-                        nearbyFriends.add(user);
+                        nearbyFriends.add(friend);
                     }
                 }
             }
@@ -438,7 +438,7 @@ public class SocialNetwork {
      *
      * @return the shortest path between 2 users.
      */
-    public Double getShortestPath(User user1, User user2, LinkedList shortestPathCities) {
+    public Double getShortestPath(User user1, User user2, LinkedList<City> shortestPathCities) {
 
         City city1 = user1.getVisitedCities().getLast();
         City city2 = user2.getVisitedCities().getLast();

@@ -95,7 +95,7 @@ public class FileManager {
                 + File.separatorChar
                 + String.format("files%s", num)
                 + File.separatorChar
-                + String.format("citiesConnections%s.txt", num);
+                + String.format("cityConnections%s.txt", num);
     }
 
     /**

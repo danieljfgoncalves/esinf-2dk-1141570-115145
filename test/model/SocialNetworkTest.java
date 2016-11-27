@@ -852,40 +852,150 @@ public class SocialNetworkTest {
      * Test of getNearbyFriendsInAgivenDistance method, of class SocialNetwork.
      */
     @Test
-    public void testGetNearbyFriendsInAgivenDistance() {
+    public void testGetNearbyFriendsInAgivenDistance01() {
         System.out.println("getNearbyFriendsInAgivenDistance");
         User user = null;
-        Double distance = null;
-        SocialNetwork instance = new SocialNetwork();
-        HashSet<User> expResult = null;
-        HashSet<User> result = instance.getNearbyFriendsInAgivenDistance(user, distance);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick0")) {
+                user = user1;
+            }
+        }
+        Double distance = 70.0;
+        HashSet<User> expResult = new HashSet();
+        expResult.add(new User("nick7", "mail_7_@sapo.pt"));
+        
+        HashSet<User> result = sn10.getNearbyFriendsInAgivenDistance(user, distance);
+        assertTrue(expResult.equals(result));
+    }
+    
+        /**
+     * Test of getNearbyFriendsInAgivenDistance method, of class SocialNetwork.
+     */
+    @Test
+    public void testGetNearbyFriendsInAgivenDistance02() {
+        System.out.println("getNearbyFriendsInAgivenDistance");
+        User user = null;
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick0")) {
+                user = user1;
+            }
+        }
+        Double distance = 70.0;
+        HashSet<User> expResult = new HashSet();
+        expResult.add(new User("nick4", "mail_4_@sapo.pt"));
+        
+        HashSet<User> result = sn10.getNearbyFriendsInAgivenDistance(user, distance);
+        assertFalse(expResult.equals(result));
     }
 
     /**
      * Test of getShortestPath method, of class SocialNetwork.
      */
     @Test
-    public void testGetShortestPath() {
+    public void testGetShortestPath01() {
         System.out.println("getShortestPath");
-        User user1 = null;
-        User user2 = null;
-        LinkedList shortestPathCities = null;
-        SocialNetwork instance = new SocialNetwork();
-        Double expResult = null;
-        Double result = instance.getShortestPath(user1, user2, shortestPathCities);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        User userA = null;
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick0")) {
+                userA = user1;
+            }
+        }
+        User userB = null;
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick7")) {
+                userB = user1;
+            }
+        }
+        LinkedList<City> shortestPathCities = new LinkedList();
+        Double expResult = 66.0;
+        Double result = sn10.getShortestPath(userA, userB, shortestPathCities);
+        assertEquals(expResult, result, 0.1);
     }
-
+    
+       /**
+     * Test of getShortestPath method, of class SocialNetwork.
+     */
+    @Test
+    public void testGetShortestPath02() {
+        System.out.println("getShortestPath");
+        User userA = null;
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick0")) {
+                userA = user1;
+            }
+        }
+        User userB = null;
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick7")) {
+                userB = user1;
+            }
+        }
+        LinkedList<City> shortestPathCities = new LinkedList();
+        Double expResult = 76.0;
+        Double result = sn10.getShortestPath(userA, userB, shortestPathCities);
+        assertFalse(expResult.intValue() == result.intValue());
+    }
+    
+   /**
+     * Test of getShortestPath method, of class SocialNetwork.
+     */
+    @Test
+    public void testGetShortestPath03() {
+        System.out.println("getShortestPath");
+        User userA = null;
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick0")) {
+                userA = user1;
+            }
+        }
+        User userB = null;
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick7")) {
+                userB = user1;
+            }
+        }
+        
+        LinkedList<City> expResult = new LinkedList();
+        expResult.add(new City(new Pair(41.314965, -8.423371), "city6", 80));
+        expResult.add(new City(new Pair(40.822244, -8.794953), "city7", 11));
+        expResult.add(new City(new Pair(40.851360, -8.136585), "city9", 65));
+        
+        LinkedList<City> result = new LinkedList();
+        sn10.getShortestPath(userA, userB, result);
+        assertEquals(expResult, result);
+    }
+    
+       /**
+     * Test of getShortestPath method, of class SocialNetwork.
+     */
+    @Test
+    public void testGetShortestPath04() {
+        System.out.println("getShortestPath");
+        User userA = null;
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick0")) {
+                userA = user1;
+            }
+        }
+        User userB = null;
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick7")) {
+                userB = user1;
+            }
+        }
+        
+        LinkedList<City> expResult = new LinkedList();
+        
+        LinkedList<City> result = new LinkedList();
+        sn10.getShortestPath(userA, userB, result);
+        assertFalse(expResult.equals(result));
+    }
+    
     /**
      * Test of shrtPathPassingCitiesWithMostFriends method, of class
      * SocialNetwork.
      */
-    @Test
+    //@Test TODO: Daniel
     public void testShrtPathPassingCitiesWithMostFriends() {
         System.out.println("shrtPathPassingCitiesWithMostFriends");
         User userA = null;

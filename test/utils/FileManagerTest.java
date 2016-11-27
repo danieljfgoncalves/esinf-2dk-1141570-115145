@@ -69,7 +69,7 @@ public class FileManagerTest {
     @Test
     public void testDefaultCitiesFile() {
         System.out.println("defaultCitiesFile");
-        String expResult = "test-files/files10/cities10.txt";
+        String expResult = "test-files"+ File.separatorChar +"files10"+ File.separatorChar +"cities10.txt";
         String result = FileManager.defaultCitiesFile(FileManager.DEFAULT_TEN);
         assertEquals(expResult, result);
     }
@@ -80,8 +80,7 @@ public class FileManagerTest {
     @Test
     public void testDefaultUsersFile() {
         System.out.println("defaultUsersFile");
-        String num = "";
-        String expResult = "test-files/files100/users100.txt";
+        String expResult = "test-files"+ File.separatorChar +"files100"+ File.separatorChar +"users100.txt";
         String result = FileManager.defaultUsersFile(FileManager.DEFAULT_ONE_HUNDRED);
         assertEquals(expResult, result);
     }
@@ -92,8 +91,8 @@ public class FileManagerTest {
     @Test
     public void testLoadSocialNetwork() {
         System.out.println("loadSocialNetwork");
-        String citiesFilePath = "test-files/files10/cities10.txt";
-        String usersFilePath = "test-files/files10/users10.txt";
+        String citiesFilePath = "test-files"+ File.separatorChar +"files10"+ File.separatorChar +"cities10.txt";
+        String usersFilePath = "test-files"+ File.separatorChar +"files10"+ File.separatorChar +"users10.txt";
 
         Set<User> users = new HashSet<>();
         users.add(new User("nick0", "mail_0_@sapo.pt"));
@@ -131,7 +130,7 @@ public class FileManagerTest {
     public void testLoadCitiesGraph01() {
         System.out.println("loadCitiesGraph");
 
-        String CityConnectionsFilePath = "test-files/files10/cityConnections10.txt";
+        String CityConnectionsFilePath = "test-files"+ File.separatorChar +"files10"+ File.separatorChar +"cityConnections10.txt";
         FileManager.loadCitiesGraph(sn10, CityConnectionsFilePath);
 
         Set<City> cities = new HashSet();
@@ -159,7 +158,7 @@ public class FileManagerTest {
     public void testLoadCitiesGraph02() {
         System.out.println("loadCitiesGraph");
 
-        String CityConnectionsFilePath = "test-files/files10/cityConnections10.txt";
+        String CityConnectionsFilePath = "test-files"+ File.separatorChar +"files10"+ File.separatorChar +"cityConnections10.txt";
         FileManager.loadCitiesGraph(sn10, CityConnectionsFilePath);
 
         MatrixGraph<City, Double> expResult = new MatrixGraph();
@@ -257,7 +256,7 @@ public class FileManagerTest {
 
         for (User user : expResult.vertices()) {
             for (User friend : user.getFriends()) {
-                expResult.insertEdge(user, friend, 1, 0);
+                expResult.insertEdge(user, friend, 1, 1);
             }
         }
 
