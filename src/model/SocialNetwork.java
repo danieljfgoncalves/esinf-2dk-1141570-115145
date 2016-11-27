@@ -1,6 +1,7 @@
 package model;
 
 import graphs.map.MapGraph;
+import graphs.map.MapGraphAlgorithms;
 import graphs.matrix.MatrixGraph;
 import graphs.matrix.MatrixGraphAlgorithms;
 import graphs.matrix.WeightedMatrixGraphAlgorithms;
@@ -475,7 +476,7 @@ public class SocialNetwork {
                 public int compare(City c1, City c2) {
 
                     int num1 = friendsPerCity.get(c1);
-                    int num2 = friendsPerCity.get(c1);
+                    int num2 = friendsPerCity.get(c2);
 
                     // Tiebreak is the city name (needed to guarantee no key is equal).
                     int compareName = c1.compareTo(c2);

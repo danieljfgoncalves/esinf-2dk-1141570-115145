@@ -81,6 +81,22 @@ public class FileManager {
                 + File.separatorChar
                 + String.format("cities%s.txt", num);
     }
+    
+    /**
+     * Obtain a default city connections file path.
+     *
+     * @param num Number of city connections to load (Use Class Constants - ex.
+     * FileManager.TEN)
+     * @return file path.
+     */
+    public static String defaultCityConnectionsFile(String num) {
+
+        return "test-files"
+                + File.separatorChar
+                + String.format("files%s", num)
+                + File.separatorChar
+                + String.format("citiesConnections%s.txt", num);
+    }
 
     /**
      * Obtain a default users file path.

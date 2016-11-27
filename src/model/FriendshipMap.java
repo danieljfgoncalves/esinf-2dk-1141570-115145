@@ -2,7 +2,13 @@ package model;
 
 import graphs.map.Edge;
 import graphs.map.MapGraph;
+import graphs.map.MapGraphAlgorithms;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.TreeMap;
 
 /**
  * Represents a map mapGraph of friendships.
@@ -82,4 +88,70 @@ public class FriendshipMap {
         return friends;
     }
 
+    // **** 2nd PART **** //
+    // **** 3 f)     ****//
+    /**
+     * Return the most influential network users.
+     *
+     * @return the most influential network users
+     */
+    public Iterable<User> mostInfluentialNetworkUsers() {
+
+        HashSet influentialUsers = new HashSet();
+        // Verify if graph has at least one connection
+        if (this.mapGraph.numEdges() < 1) {
+            return influentialUsers;
+        }
+
+        // Discover centrality of each user
+        HashMap<User, Integer> centrality = new HashMap<>();
+        Iterable<User> users = this.mapGraph.vertices();
+
+        for (User source : users) {
+
+            int maxLength = 0;
+            for (User dest : users) {
+
+                if (!source.equals(dest)) {
+
+                    LinkedList<User> relation = new LinkedList();
+                    MapGraphAlgorithms.shortestPath(mapGraph, source, dest, relation);
+
+                    maxLength = (maxLength > relation.size() - 1) ? maxLength : relation.size() - 1;
+                }
+            }
+
+            centrality.put(source, maxLength);
+        }
+
+        // Order by centrality (Ascending order)
+        TreeMap<User, Integer> sortedCent = new TreeMap(new Comparator<User>() {
+
+            @Override
+            public int compare(User u1, User u2) {
+
+                int cent1 = centrality.get(u1);
+                int cent2 = centrality.get(u2);
+
+                // Tiebreak is the user's name (needed to guarantee no key is equal).
+                int compareName = u1.compareTo(u2);
+
+                return cent1 == cent2 ? compareName : cent1 > cent2 ? 1 : -1;
+            }
+        }); // Ascending order
+        sortedCent.putAll(centrality); // Order by centrality
+
+        // Add to list the one(s) with least centrality (> radius)
+        Iterator<User> userIt = sortedCent.keySet().iterator();
+        Iterator<Integer> centIt = sortedCent.values().iterator();
+
+        influentialUsers.add(userIt.next());
+        Integer max = centIt.next();
+        while (centIt.hasNext() && max == centIt.next()) {
+
+            influentialUsers.add(userIt.next());
+        }
+
+        return influentialUsers;
+    }
 }

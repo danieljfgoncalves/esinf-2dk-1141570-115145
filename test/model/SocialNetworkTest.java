@@ -44,14 +44,22 @@ public class SocialNetworkTest {
                 FileManager.defaultCitiesFile(FileManager.DEFAULT_TEN),
                 FileManager.defaultUsersFile(FileManager.DEFAULT_TEN));
 
+        FileManager.loadCitiesGraph(sn10, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_TEN));
+        FileManager.loadFriendshipGraph(sn10);
+        
         sn100 = FileManager.loadSocialNetwork(
                 FileManager.defaultCitiesFile(FileManager.DEFAULT_ONE_HUNDRED),
                 FileManager.defaultUsersFile(FileManager.DEFAULT_ONE_HUNDRED));
+        
+        FileManager.loadCitiesGraph(sn100, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_ONE_HUNDRED));
+        FileManager.loadFriendshipGraph(sn100);
 
         sn300 = FileManager.loadSocialNetwork(
                 FileManager.defaultCitiesFile(FileManager.DEFAULT_THREE_HUNDRED),
                 FileManager.defaultUsersFile(FileManager.DEFAULT_THREE_HUNDRED));
 
+        FileManager.loadCitiesGraph(sn300, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_THREE_HUNDRED));
+        FileManager.loadFriendshipGraph(sn300);
     }
 
     /**
