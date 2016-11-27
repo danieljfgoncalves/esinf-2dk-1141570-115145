@@ -296,6 +296,12 @@ public class FileManager {
     }
 
     // **** 2nd PART **** //
+    /**
+     * Load cities to graph
+     * 
+     * @param sn social network
+     * @param filePath filepath
+     */
     public static void loadCitiesGraph(SocialNetwork sn, String filePath) {
 
         MatrixGraph<City, Double> citiesGraph = new MatrixGraph();
@@ -362,7 +368,12 @@ public class FileManager {
         // Save cities graph in social network
         sn.setCitiesGraph(citiesGraph);
     }
-
+    // ***** 3. a) ******* //
+    /**
+     * Load users to graph
+     * 
+     * @param sn social network
+     */
     public static void loadFriendshipGraph(SocialNetwork sn) {
 
         MapGraph<User, Integer> graph = new MapGraph(false);
