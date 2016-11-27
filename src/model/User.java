@@ -14,7 +14,7 @@ import javafx.util.Pair;
  * @author Daniel Gonçalves 1151452@isep.ipp.pt
  * @author Eric Jorge Schipper Ferreira do Amaral 1141570@isep.ipp.pt
  */
-public class User {
+public class User implements Comparable<User> {
 
     /**
      * User's nickname.
@@ -343,6 +343,12 @@ public class User {
         buffer.append("}");
 
         return buffer.toString();
+    }
+
+    @Override
+    public int compareTo(User other) {
+        
+        return this.getNickname().compareToIgnoreCase(other.getNickname());
     }
 
 }

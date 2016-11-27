@@ -1,7 +1,8 @@
 package utils;
 
+import graphs.map.Edge;
+import graphs.map.MapGraph;
 import graphs.matrix.MatrixGraph;
-import utils.FileManager;
 import model.City;
 import model.SocialNetwork;
 import model.User;
@@ -130,12 +131,8 @@ public class FileManagerTest {
     public void testLoadCitiesGraph01() {
         System.out.println("loadCitiesGraph");
 
-        String citiesFilePath = "test-files/files10/cities10.txt";
-        String usersFilePath = "test-files/files10/users10.txt";
-        SocialNetwork sn = FileManager.loadSocialNetwork(citiesFilePath, usersFilePath);
-
         String CityConnectionsFilePath = "test-files/files10/cityConnections10.txt";
-        FileManager.loadCitiesGraph(sn, CityConnectionsFilePath);
+        FileManager.loadCitiesGraph(sn10, CityConnectionsFilePath);
 
         Set<City> cities = new HashSet();
         cities.add(new City(new Pair(41.243345, -8.674084), "city0", 28));
@@ -150,7 +147,7 @@ public class FileManagerTest {
         cities.add(new City(new Pair(40.851360, -8.136585), "city9", 65));
 
         Iterable<City> expResult = new LinkedList<>(cities);
-        Iterable<City> result = sn.getCitiesGraph().getGraph().vertices();
+        Iterable<City> result = sn10.getCitiesGraph().getGraph().vertices();
 
         assertEquals(expResult, result);
     }
@@ -162,16 +159,12 @@ public class FileManagerTest {
     public void testLoadCitiesGraph02() {
         System.out.println("loadCitiesGraph");
 
-        String citiesFilePath = "test-files/files10/cities10.txt";
-        String usersFilePath = "test-files/files10/users10.txt";
-        SocialNetwork sn = FileManager.loadSocialNetwork(citiesFilePath, usersFilePath);
-
         String CityConnectionsFilePath = "test-files/files10/cityConnections10.txt";
-        FileManager.loadCitiesGraph(sn, CityConnectionsFilePath);
+        FileManager.loadCitiesGraph(sn10, CityConnectionsFilePath);
 
         MatrixGraph<City, Double> expResult = new MatrixGraph();
 
-        for (City city : sn.getCitiesList()) {
+        for (City city : sn10.getCitiesList()) {
             expResult.insertVertex(city);
         }
 
@@ -215,9 +208,76 @@ public class FileManagerTest {
         expResult.insertEdge(city9, city6, 76.0);
         expResult.insertEdge(city9, city0, 75.0);
 
-        MatrixGraph<City, Double> result = sn.getCitiesGraph().getGraph();
+        MatrixGraph<City, Double> result = sn10.getCitiesGraph().getGraph();
 
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of loadCitiesGraph method, of class FileManager.
+     */
+    @Test
+    public void testLoadFriendshipGraph01() {
+        System.out.println("loadFriendshipGraph");
+
+        FileManager.loadFriendshipGraph(sn10);
+
+        Set<User> users = new HashSet<>();
+        users.add(new User("nick0", "mail_0_@sapo.pt"));
+        users.add(new User("nick1", "mail_1_@sapo.pt"));
+        users.add(new User("nick2", "mail_2_@sapo.pt"));
+        users.add(new User("nick3", "mail_3_@sapo.pt"));
+        users.add(new User("nick4", "mail_4_@sapo.pt"));
+        users.add(new User("nick5", "mail_5_@sapo.pt"));
+        users.add(new User("nick6", "mail_6_@sapo.pt"));
+        users.add(new User("nick7", "mail_7_@sapo.pt"));
+        users.add(new User("nick8", "mail_8_@sapo.pt"));
+        users.add(new User("nick9", "mail_9_@sapo.pt"));
+
+        Iterable<User> expResult = users;
+        Iterable<User> result = sn10.getFriendshipMap().getGraph().vertices();
+
+        assertTrue(result.equals(expResult));
+    }
+
+    /**
+     * Test of loadCitiesGraph method, of class FileManager.
+     */
+    @Test
+    public void testLoadFriendshipGraph02() {
+        System.out.println("loadFriendshipGraph");
+
+        FileManager.loadFriendshipGraph(sn10);
+
+        MapGraph<User, Integer> expResult = new MapGraph(false);
+
+        for (User user : sn10.getUsersList()) {
+            expResult.insertVertex(user);
+        }
+
+        for (User user : expResult.vertices()) {
+            for (User friend : user.getFriends()) {
+                expResult.insertEdge(user, friend, 1, 0);
+            }
+        }
+
+        MapGraph<User, Integer> result = sn10.getFriendshipMap().getGraph();
+
+        assertTrue(result.equals(expResult));
+
+        // Verify if first Vertex nick0 has the correct friends
+        HashSet<User> expFriends = new HashSet<>();
+        // nick7,nick4,nick3
+        expFriends.add(new User("nick3", "mail_3_@sapo.pt"));
+        expFriends.add(new User("nick4", "mail_4_@sapo.pt"));
+        expFriends.add(new User("nick7", "mail_7_@sapo.pt"));
+        
+        HashSet<User> friends = new HashSet<>();
+        for (Edge<User, Integer> outEdge : result.outgoingEdges(new User("nick0", "mail_0_@sapo.pt"))) {
+            friends.add(outEdge.getVDest());
+        }
+
+        assertTrue(expFriends.equals(friends));
     }
 
     /**

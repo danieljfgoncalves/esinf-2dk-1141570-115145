@@ -318,12 +318,10 @@ public class SocialNetwork {
                 int num1 = c1.getMayor().getFriends().size();
                 int num2 = c2.getMayor().getFriends().size();
                 // If still tied order by city name (this will guarantee that no map.key is equal)
-                String name1 = c1.getName();
-                String name2 = c2.getName();
 
                 return pts1 == pts2
                         ? (num1 == num2)
-                                ? name1.compareToIgnoreCase(name2)
+                                ? c1.compareTo(c2)
                                 // (name descending order, 0 will not happen because city names are unique) 
                                 : (num1 > num2) ? -1 : 1
                         : pts1 > pts2 ? -1 : 1;
@@ -480,7 +478,7 @@ public class SocialNetwork {
                     int num2 = friendsPerCity.get(c1);
 
                     // Tiebreak is the city name (needed to guarantee no key is equal).
-                    int compareName = c1.getName().compareToIgnoreCase(c2.getName());
+                    int compareName = c1.compareTo(c2);
 
                     return num1 == num2 ? compareName : num1 < num2 ? 1 : -1;
                 }
