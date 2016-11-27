@@ -375,7 +375,7 @@ public class FileManager {
         // Add edges (friendships)
         for (User user : graph.vertices()) {
             for (User friend : user.getFriends()) {
-                graph.insertEdge(user, friend, 1, 0);
+                graph.insertEdge(user, friend, 1, 1);
             }
         }
         
