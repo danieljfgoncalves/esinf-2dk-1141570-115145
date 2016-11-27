@@ -863,12 +863,12 @@ public class SocialNetworkTest {
         Double distance = 70.0;
         HashSet<User> expResult = new HashSet();
         expResult.add(new User("nick7", "mail_7_@sapo.pt"));
-        
+
         HashSet<User> result = sn10.getNearbyFriendsInAgivenDistance(user, distance);
         assertTrue(expResult.equals(result));
     }
-    
-        /**
+
+    /**
      * Test of getNearbyFriendsInAgivenDistance method, of class SocialNetwork.
      */
     @Test
@@ -883,7 +883,7 @@ public class SocialNetworkTest {
         Double distance = 70.0;
         HashSet<User> expResult = new HashSet();
         expResult.add(new User("nick4", "mail_4_@sapo.pt"));
-        
+
         HashSet<User> result = sn10.getNearbyFriendsInAgivenDistance(user, distance);
         assertFalse(expResult.equals(result));
     }
@@ -911,8 +911,8 @@ public class SocialNetworkTest {
         Double result = sn10.getShortestPath(userA, userB, shortestPathCities);
         assertEquals(expResult, result, 0.1);
     }
-    
-       /**
+
+    /**
      * Test of getShortestPath method, of class SocialNetwork.
      */
     @Test
@@ -935,8 +935,8 @@ public class SocialNetworkTest {
         Double result = sn10.getShortestPath(userA, userB, shortestPathCities);
         assertFalse(expResult.intValue() == result.intValue());
     }
-    
-   /**
+
+    /**
      * Test of getShortestPath method, of class SocialNetwork.
      */
     @Test
@@ -954,18 +954,18 @@ public class SocialNetworkTest {
                 userB = user1;
             }
         }
-        
+
         LinkedList<City> expResult = new LinkedList();
         expResult.add(new City(new Pair(41.314965, -8.423371), "city6", 80));
         expResult.add(new City(new Pair(40.822244, -8.794953), "city7", 11));
         expResult.add(new City(new Pair(40.851360, -8.136585), "city9", 65));
-        
+
         LinkedList<City> result = new LinkedList();
         sn10.getShortestPath(userA, userB, result);
         assertEquals(expResult, result);
     }
-    
-       /**
+
+    /**
      * Test of getShortestPath method, of class SocialNetwork.
      */
     @Test
@@ -983,29 +983,71 @@ public class SocialNetworkTest {
                 userB = user1;
             }
         }
-        
+
         LinkedList<City> expResult = new LinkedList();
-        
+
         LinkedList<City> result = new LinkedList();
         sn10.getShortestPath(userA, userB, result);
         assertFalse(expResult.equals(result));
     }
-    
+
     /**
      * Test of shrtPathPassingCitiesWithMostFriends method, of class
      * SocialNetwork.
      */
-    //@Test TODO: Daniel
+    @Test
+    public void testShrtPathPassingCitiesWithMostFriends01() {
+        System.out.println("shrtPathPassingCitiesWithMostFriends");
+        User userA = null;
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick0")) {
+                userA = user1;
+            }
+        }
+        User userB = null;
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick9")) {
+                userB = user1;
+            }
+        }
+        LinkedList<City> expResult = new LinkedList<>();
+        expResult.add(new City(new Pair(41.314965, -8.423371), "city6", 80));
+        expResult.add(new City(new Pair(41.118700, -8.589700), "city3", 42));
+        expResult.add(new City(new Pair(41.243345, -8.674084), "city0", 28));
+        expResult.add(new City(new Pair(40.851360, -8.136585), "city9", 65));
+        expResult.add(new City(new Pair(40.781886, -8.697502), "city8", 7));
+
+        LinkedList<City> result = sn10.shrtPathPassingCitiesWithMostFriends(userA, userB);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of shrtPathPassingCitiesWithMostFriends method, of class
+     * SocialNetwork.
+     */
+    @Test
     public void testShrtPathPassingCitiesWithMostFriends() {
         System.out.println("shrtPathPassingCitiesWithMostFriends");
         User userA = null;
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick0")) {
+                userA = user1;
+            }
+        }
         User userB = null;
-        SocialNetwork instance = new SocialNetwork();
-        LinkedList<City> expResult = null;
-        LinkedList<City> result = instance.shrtPathPassingCitiesWithMostFriends(userA, userB);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (User user1 : sn10.getUsersList()) {
+            if (user1.getNickname().equals("nick9")) {
+                userB = user1;
+            }
+        }
+        LinkedList<City> expResult = new LinkedList<>();
+        expResult.add(new City(new Pair(41.314965, -8.423371), "city6", 80));
+        expResult.add(new City(new Pair(41.118700, -8.589700), "city3", 42));
+        expResult.add(new City(new Pair(40.851360, -8.136585), "city9", 65));
+        expResult.add(new City(new Pair(40.781886, -8.697502), "city8", 7));
+
+        LinkedList<City> result = sn10.shrtPathPassingCitiesWithMostFriends(userA, userB);
+        assertFalse(expResult.equals(result));
     }
 
     /**

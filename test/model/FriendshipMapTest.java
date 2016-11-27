@@ -135,7 +135,7 @@ public class FriendshipMapTest {
     /**
      * Test of mostInfluentialNetworkUsers method, of class FriendshipMap.
      */
-    //@Test TODO: Daniel
+    @Test
     public void testMostInfluentialNetworkUsers01() {
         System.out.println("mostInfluentialNetworkUsers");
         FriendshipMap instance = sn10.getFriendshipMap();
@@ -155,7 +155,7 @@ public class FriendshipMapTest {
     /**
      * Test of mostInfluentialNetworkUsers method, of class FriendshipMap.
      */
-    //@Test TODO: Daniel
+    @Test
     public void testMostInfluentialNetworkUsers02() {
         System.out.println("mostInfluentialNetworkUsers");
         FriendshipMap instance = sn10.getFriendshipMap();

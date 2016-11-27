@@ -498,7 +498,7 @@ public class SocialNetwork {
 
         return cities;
     }
-    
+
     /**
      * Shortest path from user A to B, passing through the cities with most
      * friends of both users.
@@ -518,20 +518,27 @@ public class SocialNetwork {
         // Get all paths available between User A & B (current locations)
         City locationA = userA.getVisitedCities().getLast();
         City locationB = userB.getVisitedCities().getLast();
+        waypoints.remove(locationA);
+        waypoints.remove(locationB);
 
         LinkedList<LinkedList<City>> paths = new LinkedList<LinkedList<City>>();
         MatrixGraphAlgorithms.allPaths(this.citiesMatrix.getGraph(), locationA, locationB, paths);
 
+        LinkedList<LinkedList<City>> filteredPaths = new LinkedList<LinkedList<City>>();
         // Check paths that pass through all waypoints
         for (LinkedList<City> path : paths) {
 
-            boolean containsAll = true;
-            while (waypoints.iterator().hasNext() && containsAll) {
+            Iterator<City> it = waypoints.iterator();
 
-                containsAll = path.contains(waypoints.iterator().next());
+            boolean containsAll = true;
+            while (it.hasNext() && containsAll) {
+
+                City waypoint = it.next();
+
+                containsAll = path.contains(waypoint);
             }
-            if (!containsAll) {
-                paths.remove(path);
+            if (containsAll) {
+                filteredPaths.add(path);
             }
         }
 
@@ -541,10 +548,13 @@ public class SocialNetwork {
             public int compare(LinkedList<City> path1, LinkedList<City> path2) {
 
                 double dist1 = 0.0;
-                City cityA = path1.iterator().next();
-                while (path1.iterator().hasNext()) {
 
-                    City cityB = path1.iterator().next();
+                Iterator<City> it1 = path1.iterator();
+
+                City cityA = it1.next();
+                while (it1.hasNext()) {
+
+                    City cityB = it1.next();
 
                     dist1 += citiesMatrix.getGraph().getEdge(cityA, cityB);
 
@@ -552,10 +562,12 @@ public class SocialNetwork {
                 }
 
                 double dist2 = 0.0;
-                cityA = path2.iterator().next();
-                while (path2.iterator().hasNext()) {
 
-                    City cityB = path2.iterator().next();
+                Iterator<City> it2 = path2.iterator();
+                cityA = it2.next();
+                while (it2.hasNext()) {
+
+                    City cityB = it2.next();
 
                     dist2 += citiesMatrix.getGraph().getEdge(cityA, cityB);
 
@@ -567,10 +579,10 @@ public class SocialNetwork {
         };
 
         // Sort paths by distance
-        Collections.sort(paths, criteria);
+        Collections.sort(filteredPaths, criteria);
 
         // Return first path ( ordered shortest to longest)
-        return paths.getFirst();
+        return filteredPaths.getFirst();
     }
 
     @Override
