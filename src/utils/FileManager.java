@@ -296,6 +296,7 @@ public class FileManager {
     }
 
     // **** 2nd PART **** //
+    // ** 2.a) ** //
     /**
      * Load cities to graph
      * 
