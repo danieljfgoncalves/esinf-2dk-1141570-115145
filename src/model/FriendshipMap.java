@@ -2,7 +2,6 @@ package model;
 
 import graphs.map.Edge;
 import graphs.map.MapGraph;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -35,7 +34,7 @@ public class FriendshipMap {
      *
      * @param graph mapGraph with friendships
      */
-    public FriendshipMap(MapGraph graph) {
+    public FriendshipMap(MapGraph<User, Integer> graph) {
         this.mapGraph = graph;
     }
 
@@ -53,7 +52,7 @@ public class FriendshipMap {
      *
      * @return the mapGraph
      */
-    public MapGraph getGraph() {
+    public MapGraph<User, Integer> getGraph() {
         return mapGraph;
     }
 
@@ -62,7 +61,7 @@ public class FriendshipMap {
      *
      * @param graph the mapGraph to set
      */
-    public void setGraph(MapGraph mapGraph) {
+    public void setGraph(MapGraph<User, Integer> mapGraph) {
         this.mapGraph = mapGraph;
     }
 
@@ -74,6 +73,7 @@ public class FriendshipMap {
      * @return all the friends from a user passed as parameter
      */
     public Iterable<User> getFriends(User user) {
+
         HashSet<User> friends = new HashSet<>();
         Iterable<Edge<User, Integer>> outEdges = this.mapGraph.outgoingEdges(user);
         for (Edge<User, Integer> outEdge : outEdges) {

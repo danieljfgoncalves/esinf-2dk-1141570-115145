@@ -45,7 +45,7 @@ public class CitiesMatrix {
      *
      * @return the graph
      */
-    public MatrixGraph getGraph() {
+    public MatrixGraph<City, Double> getGraph() {
         return graph;
     }
 
@@ -54,7 +54,7 @@ public class CitiesMatrix {
      *
      * @param graph the graph to set
      */
-    public void setGraph(MatrixGraph graph) {
+    public void setGraph(MatrixGraph<City, Double> graph) {
         this.graph = graph;
     }
 
