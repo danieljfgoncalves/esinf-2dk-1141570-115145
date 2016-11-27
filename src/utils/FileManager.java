@@ -1,5 +1,6 @@
 package utils;
 
+import graphs.map.MapGraph;
 import graphs.matrix.MatrixGraph;
 import model.City;
 import model.SocialNetwork;
@@ -79,6 +80,22 @@ public class FileManager {
                 + String.format("files%s", num)
                 + File.separatorChar
                 + String.format("cities%s.txt", num);
+    }
+    
+    /**
+     * Obtain a default city connections file path.
+     *
+     * @param num Number of city connections to load (Use Class Constants - ex.
+     * FileManager.TEN)
+     * @return file path.
+     */
+    public static String defaultCityConnectionsFile(String num) {
+
+        return "test-files"
+                + File.separatorChar
+                + String.format("files%s", num)
+                + File.separatorChar
+                + String.format("citiesConnections%s.txt", num);
     }
 
     /**
@@ -303,10 +320,10 @@ public class FileManager {
                 boolean aExists = false, bExists = false;
                 City cityA = null, cityB = null;
                 Iterator<City> it = citiesGraph.vertices().iterator();
-                while(it.hasNext() && (!aExists || !bExists)) {
-                    
+                while (it.hasNext() && (!aExists || !bExists)) {
+
                     City city = it.next();
-                    
+
                     if (city.getName().equals(attributes[0])) {
                         cityA = city;
                         aExists = true;
@@ -341,9 +358,29 @@ public class FileManager {
                 System.out.println(ex.getMessage());
             }
         }
-        
+
         // Save cities graph in social network
         sn.setCitiesGraph(citiesGraph);
+    }
+
+    public static void loadFriendshipGraph(SocialNetwork sn) {
+
+        MapGraph<User, Integer> graph = new MapGraph(false);
+
+        // Add vertices (Users)
+        for (User user : sn.getUsersList()) {
+            graph.insertVertex(user);
+        }
+        
+        // Add edges (friendships)
+        for (User user : graph.vertices()) {
+            for (User friend : user.getFriends()) {
+                graph.insertEdge(user, friend, 1, 0);
+            }
+        }
+        
+        // Set the graph to the social network
+        sn.setFriendshipMap(graph);
     }
 
     // ***************** //

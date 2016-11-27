@@ -9,7 +9,7 @@ import javafx.util.Pair;
  * @author Daniel Gonçalves 1151452@isep.ipp.pt
  * @author Eric Jorge Schipper Ferreira do Amaral 1141570@isep.ipp.pt
  */
-public class City {
+public class City implements Comparable<City> {
     //INSTANCE ATTRIBUTES
 
     /**
@@ -191,6 +191,12 @@ public class City {
                 this.getMayor(),
                 this.getCoordinates().getKey(),
                 this.getCoordinates().getValue());
+    }
+
+    @Override
+    public int compareTo(City other) {
+        
+        return this.getName().compareToIgnoreCase(other.getName());
     }
 
 }

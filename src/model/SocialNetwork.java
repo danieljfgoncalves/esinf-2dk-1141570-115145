@@ -3,10 +3,13 @@ package model;
 import graphs.map.MapGraph;
 import graphs.map.MapGraphAlgorithms;
 import graphs.matrix.MatrixGraph;
+import graphs.matrix.MatrixGraphAlgorithms;
 import graphs.matrix.WeightedMatrixGraphAlgorithms;
 import java.util.ArrayList;
+import java.util.Collections;
 import utils.Algorithms;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -316,12 +319,10 @@ public class SocialNetwork {
                 int num1 = c1.getMayor().getFriends().size();
                 int num2 = c2.getMayor().getFriends().size();
                 // If still tied order by city name (this will guarantee that no map.key is equal)
-                String name1 = c1.getName();
-                String name2 = c2.getName();
 
                 return pts1 == pts2
                         ? (num1 == num2)
-                                ? name1.compareToIgnoreCase(name2)
+                                ? c1.compareTo(c2)
                                 // (name descending order, 0 will not happen because city names are unique) 
                                 : (num1 > num2) ? -1 : 1
                         : pts1 > pts2 ? -1 : 1;
@@ -427,7 +428,6 @@ public class SocialNetwork {
         return nearbyFriends;
     }
 
-    // **** 2nd PART **** //
     // **** 2 c)     ****//
     /**
      * Get the shortest path between 2 users.
@@ -445,6 +445,133 @@ public class SocialNetwork {
         City city2 = user2.getVisitedCities().getLast();
 
         return WeightedMatrixGraphAlgorithms.shortestPath(this.citiesMatrix.getGraph(), city1, city2, shortestPathCities);
+    }
+
+    // **** 2 d)     ****//
+    /**
+     * Get cities with most friends.
+     *
+     * @param user user to check
+     * @return the list of cities with most friends
+     */
+    private Set<City> citiesWithMostFriends(User user) {
+
+        HashSet<City> cities = new HashSet<>();
+
+        Iterable<User> friends = this.friendshipMap.getFriends(user);
+        if (friends.iterator().hasNext()) { // If user doesn't have friends return empty set.
+
+            HashMap<City, Integer> friendsPerCity = new HashMap<>();
+
+            for (User friend : friends) {
+
+                City location = friend.getVisitedCities().getLast();
+                int numFriends = (friendsPerCity.containsKey(location)) ? friendsPerCity.get(location) + 1 : 1;
+                friendsPerCity.put(location, numFriends);
+            }
+
+            TreeMap<City, Integer> sortedMap = new TreeMap(new Comparator<City>() {
+
+                @Override
+                public int compare(City c1, City c2) {
+
+                    int num1 = friendsPerCity.get(c1);
+                    int num2 = friendsPerCity.get(c2);
+
+                    // Tiebreak is the city name (needed to guarantee no key is equal).
+                    int compareName = c1.compareTo(c2);
+
+                    return num1 == num2 ? compareName : num1 < num2 ? 1 : -1;
+                }
+            }); // Descending order
+            sortedMap.putAll(friendsPerCity); // Order number of friends in a city
+
+            Iterator<City> cityIt = sortedMap.keySet().iterator();
+            Iterator<Integer> numIt = sortedMap.values().iterator();
+
+            cities.add(cityIt.next());
+            Integer max = numIt.next();
+            while (numIt.hasNext() && max == numIt.next()) {
+
+                cities.add(cityIt.next());
+            }
+        }
+
+        return cities;
+    }
+
+    /**
+     * Shortest path from user A to B, passing through the cities with most
+     * friends of both users.
+     *
+     * @param userA first user (source)
+     * @param userB second user (destination)
+     * @return the shortest path
+     */
+    public LinkedList<City> shrtPathPassingCitiesWithMostFriends(User userA, User userB) {
+
+        HashSet<City> waypoints = new HashSet<>();
+
+        // Add all cities with most friends from both users
+        waypoints.addAll(citiesWithMostFriends(userA));
+        waypoints.addAll(citiesWithMostFriends(userB));
+
+        // Get all paths available between User A & B (current locations)
+        City locationA = userA.getVisitedCities().getLast();
+        City locationB = userB.getVisitedCities().getLast();
+
+        LinkedList<LinkedList<City>> paths = new LinkedList<LinkedList<City>>();
+        MatrixGraphAlgorithms.allPaths(this.citiesMatrix.getGraph(), locationA, locationB, paths);
+
+        // Check paths that pass through all waypoints
+        for (LinkedList<City> path : paths) {
+
+            boolean containsAll = true;
+            while (waypoints.iterator().hasNext() && containsAll) {
+
+                containsAll = path.contains(waypoints.iterator().next());
+            }
+            if (!containsAll) {
+                paths.remove(path);
+            }
+        }
+
+        // Sort Paths by distance (Ascending order)
+        Comparator<LinkedList<City>> criteria = new Comparator<LinkedList<City>>() {
+            @Override
+            public int compare(LinkedList<City> path1, LinkedList<City> path2) {
+
+                double dist1 = 0.0;
+                City cityA = path1.iterator().next();
+                while (path1.iterator().hasNext()) {
+
+                    City cityB = path1.iterator().next();
+
+                    dist1 += citiesMatrix.getGraph().getEdge(cityA, cityB);
+
+                    cityA = cityB; // To check next edge
+                }
+
+                double dist2 = 0.0;
+                cityA = path2.iterator().next();
+                while (path2.iterator().hasNext()) {
+
+                    City cityB = path2.iterator().next();
+
+                    dist2 += citiesMatrix.getGraph().getEdge(cityA, cityB);
+
+                    cityA = cityB; // To check next edge
+                }
+
+                return (dist1 == dist2) ? 0 : (dist1 > dist2) ? 1 : -1;
+            }
+        };
+
+        // Sort paths by distance
+        Collections.sort(paths, criteria);
+
+        // Return first path ( ordered shortest to longest)
+        return paths.getFirst();
     }
 
     @Override
