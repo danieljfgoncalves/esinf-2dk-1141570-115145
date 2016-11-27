@@ -1,8 +1,5 @@
 package model;
 
-import model.User;
-import model.SocialNetwork;
-import model.City;
 import utils.FileManager;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -46,11 +43,11 @@ public class SocialNetworkTest {
 
         FileManager.loadCitiesGraph(sn10, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_TEN));
         FileManager.loadFriendshipGraph(sn10);
-        
+
         sn100 = FileManager.loadSocialNetwork(
                 FileManager.defaultCitiesFile(FileManager.DEFAULT_ONE_HUNDRED),
                 FileManager.defaultUsersFile(FileManager.DEFAULT_ONE_HUNDRED));
-        
+
         FileManager.loadCitiesGraph(sn100, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_ONE_HUNDRED));
         FileManager.loadFriendshipGraph(sn100);
 
@@ -849,6 +846,56 @@ public class SocialNetworkTest {
         expResult.add(new User("nick267", "mail_267_@sapo.pt"));
         Set<User> result = sn300.getInfluentialUsers();
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getNearbyFriendsInAgivenDistance method, of class SocialNetwork.
+     */
+    @Test
+    public void testGetNearbyFriendsInAgivenDistance() {
+        System.out.println("getNearbyFriendsInAgivenDistance");
+        User user = null;
+        Double distance = null;
+        SocialNetwork instance = new SocialNetwork();
+        HashSet<User> expResult = null;
+        HashSet<User> result = instance.getNearbyFriendsInAgivenDistance(user, distance);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getShortestPath method, of class SocialNetwork.
+     */
+    @Test
+    public void testGetShortestPath() {
+        System.out.println("getShortestPath");
+        User user1 = null;
+        User user2 = null;
+        LinkedList shortestPathCities = null;
+        SocialNetwork instance = new SocialNetwork();
+        Double expResult = null;
+        Double result = instance.getShortestPath(user1, user2, shortestPathCities);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of shrtPathPassingCitiesWithMostFriends method, of class
+     * SocialNetwork.
+     */
+    @Test
+    public void testShrtPathPassingCitiesWithMostFriends() {
+        System.out.println("shrtPathPassingCitiesWithMostFriends");
+        User userA = null;
+        User userB = null;
+        SocialNetwork instance = new SocialNetwork();
+        LinkedList<City> expResult = null;
+        LinkedList<City> result = instance.shrtPathPassingCitiesWithMostFriends(userA, userB);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
