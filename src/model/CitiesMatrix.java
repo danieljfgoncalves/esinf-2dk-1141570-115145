@@ -13,7 +13,7 @@ public class CitiesMatrix {
     /**
      * Graph that contains all cities.
      */
-    private MatrixGraph graph;
+    private MatrixGraph<City, Double> graph;
 
     /**
      * Constructs a empty cities matrix graph.
@@ -58,4 +58,12 @@ public class CitiesMatrix {
         this.graph = graph;
     }
 
+    /**
+     * Obtains all cities of graph.
+     *
+     * @return the graph
+     */
+    public Iterable<City> getCities() {
+        return this.graph.vertices();
+    }
 }

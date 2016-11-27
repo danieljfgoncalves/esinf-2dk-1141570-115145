@@ -2,6 +2,8 @@ package model;
 
 import graphs.map.MapGraph;
 import graphs.matrix.MatrixGraph;
+import graphs.matrix.WeightedMatrixGraphAlgorithms;
+import java.util.ArrayList;
 import utils.Algorithms;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -381,6 +383,47 @@ public class SocialNetwork {
         }
 
         return influentialUsers;
+    }
+
+    // **** 2nd PART **** //
+    // **** 2 b)     ****//
+    /**
+     * Get the friends nearby, at a distance lower than given value.
+     *
+     * @param user user to get friends
+     * @param distance distance to scan
+     * @return iterable with the closest friends
+     */
+    public HashSet<User> getNearbyFriendsInAgivenDistance(User user, Double distance) {
+
+        HashSet<User> nearbyFriends = new HashSet<>();
+        Iterable<User> friends = new ArrayList<>();
+
+        friends = this.friendshipMap.getFriends(user);
+
+        //get all cities at the distance
+        City userCurrentCity = user.getVisitedCities().getLast();
+        for (City city : this.citiesMatrix.getCities()) {
+            double distanceFromCity
+                    = WeightedMatrixGraphAlgorithms.shortestPath(this.citiesMatrix.getGraph(), userCurrentCity, city, new LinkedList<>());
+            if (distanceFromCity < distance && distanceFromCity > 0) { // Verify if nearby and if their is a path between.
+                // go through friends to see if any is on the nearby city
+                for (User friend : friends) {
+                    if (friend.getVisitedCities().getLast().equals(city)) {
+                        nearbyFriends.add(user);
+                    }
+                }
+            }
+
+        }
+        //check the user current city as well
+        for (User friend : friends) {
+            if (friend.getVisitedCities().getLast().equals(userCurrentCity)) {
+                nearbyFriends.add(user);
+            }
+        }
+
+        return nearbyFriends;
     }
 
     @Override
