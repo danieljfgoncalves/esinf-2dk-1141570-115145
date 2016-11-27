@@ -1,5 +1,6 @@
 package graphs.map;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -104,7 +105,13 @@ public class MapGraph<V,E> implements MapGraphInterface<V,E> {
     @Override
     public Iterable<Edge<V,E>> edges() { 
         
-        throw new UnsupportedOperationException("Not supported yet.");
+        ArrayList<Edge<V, E>> edges = new ArrayList<>();
+        
+        for(Vertex<V, E> vertex : vertices.values())
+            for( Edge<V, E> edge : vertex.getAllOutEdges() )
+                edges.add(edge);
+               
+    return edges;
     }
     
     @Override
@@ -185,7 +192,27 @@ public class MapGraph<V,E> implements MapGraphInterface<V,E> {
     @Override
     public Iterable<Edge<V,E>> incomingEdges(V vert){
  
-        throw new UnsupportedOperationException("Not supported yet.");
+        ArrayList<Edge<V, E>> incoming_edges = new ArrayList<>();
+        
+         if (!validVertex(vert))
+        {
+            return null;
+        }
+
+        Vertex<V, E> vertex = vertices.get(vert);
+        
+        
+        Iterable<Edge<V, E>> list_all_edges = edges();
+        
+        for (Edge<V, E> e : list_all_edges)
+        {
+            if(e.getVDest() == vertex.getElement())
+            {
+            incoming_edges.add(e);
+            }
+        }
+     
+        return incoming_edges;
     }
             
     @Override
@@ -235,7 +262,19 @@ public class MapGraph<V,E> implements MapGraphInterface<V,E> {
     @Override
     public boolean removeVertex(V vert){
         
-        throw new UnsupportedOperationException("Not supported yet.");
+        if(!validVertex(vert)){
+            return false;
+        }
+        
+        for(V v : this.vertices.keySet()){
+            this.removeEdge(v, vert);
+            this.removeEdge(vert, v);
+        }
+        
+        this.vertices.remove(vert);
+        this.numVert--;
+        
+        return false;
     }
     
     @Override
