@@ -1,7 +1,6 @@
 package model;
 
 import graphs.map.MapGraph;
-import graphs.map.MapGraphAlgorithms;
 import graphs.matrix.MatrixGraph;
 import graphs.matrix.MatrixGraphAlgorithms;
 import graphs.matrix.WeightedMatrixGraphAlgorithms;
@@ -499,7 +498,7 @@ public class SocialNetwork {
 
         return cities;
     }
-
+    
     /**
      * Shortest path from user A to B, passing through the cities with most
      * friends of both users.
