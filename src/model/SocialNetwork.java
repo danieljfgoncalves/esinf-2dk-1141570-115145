@@ -426,6 +426,25 @@ public class SocialNetwork {
         return nearbyFriends;
     }
 
+    // **** 2nd PART **** //
+    // **** 2 c)     ****//
+    /**
+     * Get the shortest path between 2 users.
+     *
+     * @param user1 user1 user one
+     * @param user2 user2 user two
+     * @param shortestPathCities the list to be filled with the shortest path cities
+     *
+     * @return the shortest path between 2 users.
+     */
+    public Double getShortestPath(User user1, User user2, LinkedList shortestPathCities) {
+
+        City city1 = user1.getVisitedCities().getLast();
+        City city2 = user2.getVisitedCities().getLast();
+
+        return WeightedMatrixGraphAlgorithms.shortestPath(this.citiesMatrix.getGraph(), city1, city2, shortestPathCities);
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
