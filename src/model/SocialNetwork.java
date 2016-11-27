@@ -1,6 +1,7 @@
 package model;
 
 import graphs.map.MapGraph;
+import graphs.map.MapGraphAlgorithms;
 import graphs.matrix.MatrixGraph;
 import graphs.matrix.WeightedMatrixGraphAlgorithms;
 import java.util.ArrayList;
@@ -433,7 +434,8 @@ public class SocialNetwork {
      *
      * @param user1 user1 user one
      * @param user2 user2 user two
-     * @param shortestPathCities the list to be filled with the shortest path cities
+     * @param shortestPathCities the list to be filled with the shortest path
+     * cities
      *
      * @return the shortest path between 2 users.
      */
