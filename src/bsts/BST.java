@@ -7,6 +7,6 @@ package bsts;
  * @author Eric Jorge Schipper Ferreira do Amaral 1141570@isep.ipp.pt
  * 
  */
-public class BST {
+public class BST <E extends Comparable<E>> {
     
 }
