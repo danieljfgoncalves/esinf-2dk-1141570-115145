@@ -46,6 +46,11 @@ public class SocialNetwork {
      * Social Network friendships MapGraph
      */
     private FriendshipMap friendshipMap;
+    
+    /**
+     * Binary Search Tree with the Mayors of each city
+     */
+    private MayorBST mayorsBST;
 
     //CONSTRUCTORS
     /**
@@ -56,6 +61,7 @@ public class SocialNetwork {
         this.citiesList = new HashSet<>();
         this.citiesMatrix = new CitiesMatrix();
         this.friendshipMap = new FriendshipMap(false);
+        this.mayorsBST = new MayorBST();
     }
 
     /**
@@ -69,6 +75,7 @@ public class SocialNetwork {
         this.citiesList = new HashSet<>(otherSN.citiesList);
         this.citiesMatrix = new CitiesMatrix(otherSN.citiesMatrix);
         this.friendshipMap = new FriendshipMap(false);
+        this.mayorsBST = new MayorBST();
 
     }
 
@@ -84,6 +91,7 @@ public class SocialNetwork {
         this.citiesList = new HashSet<>(citiesList);
         this.citiesMatrix = new CitiesMatrix();
         this.friendshipMap = new FriendshipMap(false);
+        this.mayorsBST = new MayorBST();
     }
 
     //GETTERS AND SETTERS
@@ -586,6 +594,16 @@ public class SocialNetwork {
 
         // Return first path ( ordered shortest to longest)
         return filteredPaths.getFirst();
+    }
+
+    // ****  3rd PART  **** //
+    // ****     4.     **** //
+    /**
+     * Creates a mayors binary search tree with the mayors of each city.
+     */
+    public void setMayorsSearchTree() {
+
+        this.mayorsBST.createTree(listMayors().values());
     }
 
     @Override
