@@ -270,7 +270,10 @@ public class SocialNetwork {
      * @return true if the city is successfully added, false otherwise
      */
     public boolean addCity(City city) {
-        return this.citiesList.add(city);
+        if (!(city.getPoints() < 0)) {
+            return this.citiesList.add(city);
+        }
+        return false;
     }
 
     /**
