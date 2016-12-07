@@ -196,7 +196,8 @@ public class City implements Comparable<City> {
     @Override
     public int compareTo(City other) {
         
-        return this.getName().compareToIgnoreCase(other.getName());
+        // TODO: Implement City Compare to
+        return 0;
     }
 
 }

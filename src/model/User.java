@@ -347,8 +347,10 @@ public class User implements Comparable<User> {
 
     @Override
     public int compareTo(User other) {
-        
-        return this.getNickname().compareToIgnoreCase(other.getNickname());
-    }
 
+        Integer score1 = new Integer(this.totalScore());
+        Integer score2 = new Integer(other.totalScore());
+
+        return score1.compareTo(score2);
+    }
 }

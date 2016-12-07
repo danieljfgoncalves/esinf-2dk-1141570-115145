@@ -194,7 +194,7 @@ public class FriendshipMap {
                 int cent2 = centrality.get(u2);
 
                 // Tiebreak is the user's name (needed to guarantee no key is equal).
-                int compareName = u1.compareTo(u2);
+                int compareName = u1.getNickname().compareToIgnoreCase(u2.getNickname());
 
                 return cent1 == cent2 ? compareName : cent1 > cent2 ? 1 : -1;
             }
