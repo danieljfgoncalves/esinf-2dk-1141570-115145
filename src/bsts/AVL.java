@@ -10,53 +10,54 @@ import javafx.scene.Node;
  * @param <E>
  *
  */
-public class AVL<E extends Comparable<E>> extends BST<E> {
-
-    private int balanceFactor(Node<E> node) {
-
-        return (height(node.getRight()) - height(node.getLeft()));
+public class AVL <E extends Comparable<E>> extends BST<E> {
+    
+    
+    private int balanceFactor(Node<E> node){
+        
+          return (height(node.getRight())-height(node.getLeft()));
     }
+    
+    private Node<E> rightRotation(Node<E> node){
+        
+         Node<E>  leftson = node.getLeft();
 
-    private Node<E> rightRotation(Node<E> node) {
-
-        Node<E> leftson = node.getLeft();
-
-        node.setLeft(leftson.getRight());
+        node.setLeft( leftson.getRight() );
         leftson.setRight(node);
-
+        
         node = leftson;
-
+        
         return node;
     }
+    
+    private Node<E> leftRotation(Node<E> node){
+        
+        Node<E>  rightson = node.getRight();
 
-    private Node<E> leftRotation(Node<E> node) {
-
-        Node<E> rightson = node.getRight();
-
-        node.setRight(rightson.getLeft());
+        node.setRight( rightson.getLeft() );
         rightson.setLeft(node);
-
+        
         node = rightson;
-
+        
         return node;
     }
-
-    private Node<E> twoRotations(Node<E> node) {
-
+    
+    private Node<E> twoRotations(Node<E> node){
+        
         if (balanceFactor(node) < 0) {
-            node.setLeft(leftRotation(node.getLeft()));
-            node = rightRotation(node);
-        } else {
-            node.setRight(rightRotation(node.getRight()));
-            node = leftRotation(node);
-        }
-        return node;
+	  node.setLeft(leftRotation(node.getLeft()));
+	  node = rightRotation(node) ;
+	}
+	else {
+	  node.setRight(rightRotation(node.getRight()));	
+	  node = leftRotation(node) ;
+	}
+	return node ;
     }
-}
-
-private Node<E> balanceNode(Node<E> node)
+    
+    private Node<E> balanceNode(Node<E> node)
     {
-         if (balanceFactor(node) < -1) 
+        if (balanceFactor(node) < -1) 
             if (balanceFactor(node.getLeft()) <= 0)
                 node = rightRotation(node);  
             else  
@@ -72,8 +73,8 @@ private Node<E> balanceNode(Node<E> node)
     }
     
     @Override
-        public void insert(E element){
-        root = insert(element, root);
+    public void insert(E element){
+         root = insert(element, root);
     }
     private Node<E> insert(E element, Node<E> node){
         if (node == null) {
@@ -95,21 +96,13 @@ private Node<E> balanceNode(Node<E> node)
         return node;
     }
     
-    @Override
-        public void remove(E element){
+    @Override  
+    public void remove(E element){
         root = remove(element, root());
     }
 
     private Node<E> remove(E element, BST.Node<E> node) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-   
-    public boolean equals(AVL<E> second) {
-        return equals(root, second.root);
-    }
-
-    public boolean equals(Node<E> root1, Node<E> root2) {
-        if (node == null) {
+         if (node == null) {
             return null;
         }   
         if (element.compareTo(node.getElement())==0) { // node is the Node to be removed
@@ -140,5 +133,24 @@ private Node<E> balanceNode(Node<E> node)
         }
         return node;
     }
+   
+    public boolean equals(AVL<E> second) {
+        return equals(root, second.root);
+    }
+
+    public boolean equals(Node<E> root1, Node<E> root2) {
+        if (root1 == null && root2 == null) {
+            return true;
+        }
+        else if (root1 != null && root2 != null) {
+            if (root1.getElement().compareTo(root2.getElement()) == 0) {
+                return equals(root1.getLeft(), root2.getLeft())
+                        && equals(root1.getRight(), root2.getRight());
+            } else {
+                return false;
+            }
+            
+        }
+        else return false;
     }
 }
