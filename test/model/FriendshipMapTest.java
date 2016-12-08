@@ -21,12 +21,12 @@ public class FriendshipMapTest {
     /**
      * Social Network object to test with 10 cities & 100 users.
      */
-    SocialNetwork sn100;
+//    SocialNetwork sn100;
 
     /**
      * Social Network object to test with 10 cities & 300 users.
      */
-    SocialNetwork sn300;
+//    SocialNetwork sn300;
 
     public FriendshipMapTest() {
 
@@ -37,19 +37,19 @@ public class FriendshipMapTest {
         FileManager.loadCitiesGraph(sn10, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_TEN));
         FileManager.loadFriendshipGraph(sn10);
 
-        sn100 = FileManager.loadSocialNetwork(
-                FileManager.defaultCitiesFile(FileManager.DEFAULT_ONE_HUNDRED),
-                FileManager.defaultUsersFile(FileManager.DEFAULT_ONE_HUNDRED));
+//        sn100 = FileManager.loadSocialNetwork(
+//                FileManager.defaultCitiesFile(FileManager.DEFAULT_ONE_HUNDRED),
+//                FileManager.defaultUsersFile(FileManager.DEFAULT_ONE_HUNDRED));
+//
+//        FileManager.loadCitiesGraph(sn100, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_ONE_HUNDRED));
+//        FileManager.loadFriendshipGraph(sn100);
 
-        FileManager.loadCitiesGraph(sn100, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_ONE_HUNDRED));
-        FileManager.loadFriendshipGraph(sn100);
-
-        sn300 = FileManager.loadSocialNetwork(
-                FileManager.defaultCitiesFile(FileManager.DEFAULT_THREE_HUNDRED),
-                FileManager.defaultUsersFile(FileManager.DEFAULT_THREE_HUNDRED));
-
-        FileManager.loadCitiesGraph(sn300, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_THREE_HUNDRED));
-        FileManager.loadFriendshipGraph(sn300);
+//        sn300 = FileManager.loadSocialNetwork(
+//                FileManager.defaultCitiesFile(FileManager.DEFAULT_THREE_HUNDRED),
+//                FileManager.defaultUsersFile(FileManager.DEFAULT_THREE_HUNDRED));
+//
+//        FileManager.loadCitiesGraph(sn300, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_THREE_HUNDRED));
+//        FileManager.loadFriendshipGraph(sn300);
 
     }
 

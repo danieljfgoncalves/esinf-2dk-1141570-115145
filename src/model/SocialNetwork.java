@@ -46,11 +46,11 @@ public class SocialNetwork {
      * Social Network friendships MapGraph
      */
     private FriendshipMap friendshipMap;
-    
+
     /**
      * Binary Search Tree with the Mayors of each city
      */
-    private MayorBST mayorsBST;
+    private final MayorAVL mayorsAVL;
 
     //CONSTRUCTORS
     /**
@@ -61,7 +61,7 @@ public class SocialNetwork {
         this.citiesList = new HashSet<>();
         this.citiesMatrix = new CitiesMatrix();
         this.friendshipMap = new FriendshipMap(false);
-        this.mayorsBST = new MayorBST();
+        this.mayorsAVL = new MayorAVL();
     }
 
     /**
@@ -75,7 +75,7 @@ public class SocialNetwork {
         this.citiesList = new HashSet<>(otherSN.citiesList);
         this.citiesMatrix = new CitiesMatrix(otherSN.citiesMatrix);
         this.friendshipMap = new FriendshipMap(false);
-        this.mayorsBST = new MayorBST();
+        this.mayorsAVL = new MayorAVL();
 
     }
 
@@ -91,7 +91,7 @@ public class SocialNetwork {
         this.citiesList = new HashSet<>(citiesList);
         this.citiesMatrix = new CitiesMatrix();
         this.friendshipMap = new FriendshipMap(false);
-        this.mayorsBST = new MayorBST();
+        this.mayorsAVL = new MayorAVL();
     }
 
     //GETTERS AND SETTERS
@@ -355,7 +355,7 @@ public class SocialNetwork {
      */
     public Set<User> getInfluentialUsers() {
 
-        Set<User> influentialUsers = new HashSet<User>();
+        Set<User> influentialUsers = new HashSet<>();
 
         if (usersList.size() > 0) {
 
@@ -532,10 +532,10 @@ public class SocialNetwork {
         waypoints.remove(locationA);
         waypoints.remove(locationB);
 
-        LinkedList<LinkedList<City>> paths = new LinkedList<LinkedList<City>>();
+        LinkedList<LinkedList<City>> paths = new LinkedList<>();
         MatrixGraphAlgorithms.allPaths(this.citiesMatrix.getGraph(), locationA, locationB, paths);
 
-        LinkedList<LinkedList<City>> filteredPaths = new LinkedList<LinkedList<City>>();
+        LinkedList<LinkedList<City>> filteredPaths = new LinkedList<>();
         // Check paths that pass through all waypoints
         for (LinkedList<City> path : paths) {
 
@@ -595,15 +595,24 @@ public class SocialNetwork {
         // Return first path ( ordered shortest to longest)
         return filteredPaths.getFirst();
     }
-
     // ****  3rd PART  **** //
     // ****     4.     **** //
+
+    /**
+     * Get the binary Search Tree with the Mayors of each city
+     *
+     * @return the mayorsAVL
+     */
+    public MayorAVL getMayorsAVL() {
+        return mayorsAVL;
+    }
+
     /**
      * Creates a mayors binary search tree with the mayors of each city.
      */
     public void setMayorsSearchTree() {
 
-        this.mayorsBST.createTree(listMayors().values());
+        this.getMayorsAVL().createTree(listMayors().values());
     }
 
     @Override

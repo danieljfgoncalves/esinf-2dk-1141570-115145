@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import utils.FileManager;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -7,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import javafx.util.Pair;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.Test;
@@ -24,16 +26,16 @@ public class SocialNetworkTest {
      * Social Network object to test with 10 cities & 10 users.
      */
     SocialNetwork sn10;
-
-    /**
-     * Social Network object to test with 10 cities & 100 users.
-     */
-    SocialNetwork sn100;
-
-    /**
-     * Social Network object to test with 10 cities & 300 users.
-     */
-    SocialNetwork sn300;
+//
+//    /**
+//     * Social Network object to test with 10 cities & 100 users.
+//     */
+//    SocialNetwork sn100;
+//
+//    /**
+//     * Social Network object to test with 10 cities & 300 users.
+//     */
+//    SocialNetwork sn300;
 
     public SocialNetworkTest() {
 
@@ -44,19 +46,21 @@ public class SocialNetworkTest {
         FileManager.loadCitiesGraph(sn10, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_TEN));
         FileManager.loadFriendshipGraph(sn10);
 
-        sn100 = FileManager.loadSocialNetwork(
-                FileManager.defaultCitiesFile(FileManager.DEFAULT_ONE_HUNDRED),
-                FileManager.defaultUsersFile(FileManager.DEFAULT_ONE_HUNDRED));
-
-        FileManager.loadCitiesGraph(sn100, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_ONE_HUNDRED));
-        FileManager.loadFriendshipGraph(sn100);
-
-        sn300 = FileManager.loadSocialNetwork(
-                FileManager.defaultCitiesFile(FileManager.DEFAULT_THREE_HUNDRED),
-                FileManager.defaultUsersFile(FileManager.DEFAULT_THREE_HUNDRED));
-
-        FileManager.loadCitiesGraph(sn300, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_THREE_HUNDRED));
-        FileManager.loadFriendshipGraph(sn300);
+        // Commented so testes of 3rd part can performe faster
+//
+//        sn100 = FileManager.loadSocialNetwork(
+//                FileManager.defaultCitiesFile(FileManager.DEFAULT_ONE_HUNDRED),
+//                FileManager.defaultUsersFile(FileManager.DEFAULT_ONE_HUNDRED));
+//
+//        FileManager.loadCitiesGraph(sn100, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_ONE_HUNDRED));
+//        FileManager.loadFriendshipGraph(sn100);
+//
+//        sn300 = FileManager.loadSocialNetwork(
+//                FileManager.defaultCitiesFile(FileManager.DEFAULT_THREE_HUNDRED),
+//                FileManager.defaultUsersFile(FileManager.DEFAULT_THREE_HUNDRED));
+//
+//        FileManager.loadCitiesGraph(sn300, FileManager.defaultCityConnectionsFile(FileManager.DEFAULT_THREE_HUNDRED));
+//        FileManager.loadFriendshipGraph(sn300);
     }
 
     /**
@@ -254,30 +258,28 @@ public class SocialNetworkTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of removeUser method, of class SocialNetwork.
-     */
-    @Test
-    public void testRemoveUser_User01() {
-        System.out.println("removeUser");
-        User user = sn100.getUsersList().iterator().next();
-
-        boolean result = sn100.removeUser(user);
-        assertTrue(result);
-    }
-
-    /**
-     * Test of removeUser method, of class SocialNetwork.
-     */
-    @Test
-    public void testRemoveUser_User02() {
-        System.out.println("removeUser");
-        User user = new User();
-
-        boolean result = sn300.removeUser(user);
-        assertFalse(result);
-    }
-
+//    /**
+//     * Test of removeUser method, of class SocialNetwork.
+//     */
+//    @Test
+//    public void testRemoveUser_User01() {
+//        System.out.println("removeUser");
+//        User user = sn100.getUsersList().iterator().next();
+//
+//        boolean result = sn100.removeUser(user);
+//        assertTrue(result);
+//    }
+//    /**
+//     * Test of removeUser method, of class SocialNetwork.
+//     */
+//    @Test
+//    public void testRemoveUser_User02() {
+//        System.out.println("removeUser");
+//        User user = new User();
+//
+//        boolean result = sn300.removeUser(user);
+//        assertFalse(result);
+//    }
     /**
      * Test of removeUser method, of class SocialNetwork.
      */
@@ -357,30 +359,28 @@ public class SocialNetworkTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of removeUser method, of class SocialNetwork.
-     */
-    @Test
-    public void testRemoveUser_String01() {
-        System.out.println("removeUser");
-        String nickname = sn100.getUsersList().iterator().next().getNickname();
-
-        boolean result = sn100.removeUser(nickname);
-        assertTrue(result);
-    }
-
-    /**
-     * Test of removeUser method, of class SocialNetwork.
-     */
-    @Test
-    public void testRemoveUser_String02() {
-        System.out.println("removeUser");
-        String nickname = "test";
-
-        boolean result = sn100.removeUser(nickname);
-        assertFalse(result);
-    }
-
+//    /**
+//     * Test of removeUser method, of class SocialNetwork.
+//     */
+//    @Test
+//    public void testRemoveUser_String01() {
+//        System.out.println("removeUser");
+//        String nickname = sn100.getUsersList().iterator().next().getNickname();
+//
+//        boolean result = sn100.removeUser(nickname);
+//        assertTrue(result);
+//    }
+//    /**
+//     * Test of removeUser method, of class SocialNetwork.
+//     */
+//    @Test
+//    public void testRemoveUser_String02() {
+//        System.out.println("removeUser");
+//        String nickname = "test";
+//
+//        boolean result = sn100.removeUser(nickname);
+//        assertFalse(result);
+//    }
     /**
      * Test of removeUser method, of class SocialNetwork.
      */
@@ -406,28 +406,26 @@ public class SocialNetworkTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of hasUser method, of class SocialNetwork.
-     */
-    @Test
-    public void testHasUser_User01() {
-        System.out.println("hasUser");
-        User user = new User("nick46", "mail_46_@sapo.pt");
-        boolean result = sn300.hasUser(user);
-        assertTrue(result);
-    }
-
-    /**
-     * Test of hasUser method, of class SocialNetwork.
-     */
-    @Test
-    public void testHasUser_User02() {
-        System.out.println("hasUser");
-        User user = new User("nick466", "mail_466_@sapo.pt");
-        boolean result = sn300.hasUser(user);
-        assertFalse(result);
-    }
-
+//    /**
+//     * Test of hasUser method, of class SocialNetwork.
+//     */
+//    @Test
+//    public void testHasUser_User01() {
+//        System.out.println("hasUser");
+//        User user = new User("nick46", "mail_46_@sapo.pt");
+//        boolean result = sn300.hasUser(user);
+//        assertTrue(result);
+//    }
+//    /**
+//     * Test of hasUser method, of class SocialNetwork.
+//     */
+//    @Test
+//    public void testHasUser_User02() {
+//        System.out.println("hasUser");
+//        User user = new User("nick466", "mail_466_@sapo.pt");
+//        boolean result = sn300.hasUser(user);
+//        assertFalse(result);
+//    }
     /**
      * Test of addCity method, of class SocialNetwork.
      */
@@ -626,17 +624,13 @@ public class SocialNetworkTest {
         SocialNetwork sn = new SocialNetwork(sn10.getUsersList(), cities1);
         sn.updateMayors();
 
-        System.out.println("result:");
         List<User> result = new LinkedList<>();
         for (City city : sn.getCitiesList()) {
             result.add(city.getMayor());
-            System.out.println(city.getMayor().getNickname());
         }
-        System.out.println("expResult:");
         List<User> expResult = new LinkedList<>();
         for (City city : cities2) {
             expResult.add(city.getMayor());
-            System.out.println(city.getMayor().getNickname());
         }
         assertEquals(expResult, result);
     }
@@ -822,32 +816,30 @@ public class SocialNetworkTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getInfluentialUsers method, of class SocialNetwork.
-     */
-    @Test
-    public void testGetInfluentialUsers02() {
-        System.out.println("getInfluentialUsers");
-
-        Set<User> expResult = new HashSet<>();
-        expResult.add(new User("nick99", "mail_99_@sapo.pt"));
-        Set<User> result = sn100.getInfluentialUsers();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of getInfluentialUsers method, of class SocialNetwork.
-     */
-    @Test
-    public void testGetInfluentialUsers03() {
-        System.out.println("getInfluentialUsers");
-
-        Set<User> expResult = new HashSet<>();
-        expResult.add(new User("nick267", "mail_267_@sapo.pt"));
-        Set<User> result = sn300.getInfluentialUsers();
-        assertEquals(expResult, result);
-    }
-
+//    /**
+//     * Test of getInfluentialUsers method, of class SocialNetwork.
+//     */
+//    @Test
+//    public void testGetInfluentialUsers02() {
+//        System.out.println("getInfluentialUsers");
+//
+//        Set<User> expResult = new HashSet<>();
+//        expResult.add(new User("nick99", "mail_99_@sapo.pt"));
+//        Set<User> result = sn100.getInfluentialUsers();
+//        assertEquals(expResult, result);
+//    }
+//    /**
+//     * Test of getInfluentialUsers method, of class SocialNetwork.
+//     */
+//    @Test
+//    public void testGetInfluentialUsers03() {
+//        System.out.println("getInfluentialUsers");
+//
+//        Set<User> expResult = new HashSet<>();
+//        expResult.add(new User("nick267", "mail_267_@sapo.pt"));
+//        Set<User> result = sn300.getInfluentialUsers();
+//        assertEquals(expResult, result);
+//    }
     /**
      * Test of getNearbyFriendsInAgivenDistance method, of class SocialNetwork.
      */
@@ -1048,6 +1040,43 @@ public class SocialNetworkTest {
 
         LinkedList<City> result = sn10.shrtPathPassingCitiesWithMostFriends(userA, userB);
         assertFalse(expResult.equals(result));
+    }
+
+    // ****  3rd PART  **** //
+    // ****     4.     **** // 
+    /**
+     * Test of createTree method, of class MayorAVL.
+     */
+    @Test
+    public void testSetMayorsSearchTree01() {
+
+        System.out.println("setMayorsSearchTree");
+        // Converted to TreeSet so it would preserve the order but exclude repetition (Can be the same mayor of more than one city)
+        Set<User> expResult = new TreeSet<>(sn10.listMayors().values());
+        sn10.setMayorsSearchTree();
+        List<User> result = (List<User>) sn10.getMayorsAVL().inOrder();
+
+        // Test if Mayors are order by descending order & if AVL Tree is ordered & has the same size
+        // listMayors already returns a collection order by mayors score
+        assertArrayEquals(expResult.toArray(), result.toArray());
+
+    }
+
+    /**
+     * Test of createTree method, of class MayorAVL.
+     */
+    @Test
+    public void testSetMayorsSearchTree02() {
+
+        System.out.println("setMayorsSearchTree");
+        MayorAVL expResult = new MayorAVL();
+        sn10.setMayorsSearchTree();
+
+        MayorAVL result = sn10.getMayorsAVL();
+
+        // Verify if tree is equal to empty list.
+        assertFalse(expResult.equals(result));
+
     }
 
     /**
