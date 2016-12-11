@@ -350,7 +350,10 @@ public class User implements Comparable<User> {
 
         Integer score1 = new Integer(this.totalScore());
         Integer score2 = new Integer(other.totalScore());
+        int compareScore = score1.compareTo(score2);
 
-        return -1 * score1.compareTo(score2); // Descending order
+        return (compareScore == 0)
+                ? this.nickname.compareToIgnoreCase(other.nickname)
+                : -1 * compareScore; // Descending order
     }
 }
