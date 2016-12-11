@@ -1,6 +1,6 @@
 package model;
 
-import java.util.ArrayList;
+import bsts.AVL;
 import utils.FileManager;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -1074,9 +1074,52 @@ public class SocialNetworkTest {
 
         MayorAVL result = sn10.getMayorsAVL();
 
-        // Verify if tree is equal to empty list.
+        // Verify if tree is not equal to empty list.
         assertFalse(expResult.equals(result));
 
+    }
+
+    /**
+     * Test of setCitiesSearchTree method, of class SocialNetwork.
+     */
+    @Test
+    public void testSetCitiesSearchTree01() {
+        System.out.println("setCitiesSearchTree");
+        sn10.setCitiesSearchTree();
+
+        // Create order list with expected result
+        List<CityAndUsers> expResult = new LinkedList<>();
+        expResult.add(new CityAndUsers(new City(new Pair(41.243345, -8.674084), "city0", 28), 0));
+        expResult.add(new CityAndUsers(new City(new Pair(41.237364, -8.846746), "city1", 72), 0));
+        expResult.add(new CityAndUsers(new City(new Pair(40.822244, -8.794953), "city7", 11), 0));
+        expResult.add(new CityAndUsers(new City(new Pair(40.519841, -8.085113), "city2", 81), 1));
+        expResult.add(new CityAndUsers(new City(new Pair(41.118700, -8.589700), "city3", 42), 1));
+        expResult.add(new CityAndUsers(new City(new Pair(41.467407, -8.964340), "city4", 64), 1));
+        expResult.add(new CityAndUsers(new City(new Pair(41.337408, -8.291943), "city5", 74), 1));
+        expResult.add(new CityAndUsers(new City(new Pair(41.314965, -8.423371), "city6", 80), 1));
+        expResult.add(new CityAndUsers(new City(new Pair(40.851360, -8.136585), "city9", 65), 2));
+        expResult.add(new CityAndUsers(new City(new Pair(40.781886, -8.697502), "city8", 7), 3));
+
+        List<CityAndUsers> result = (List<CityAndUsers>) sn10.getCitiesAVL().inOrder();
+
+        // Test if cities are ordered by ascendent order of users checked in & if AVL Tree is ordered & has the same size
+        assertArrayEquals(expResult.toArray(), result.toArray());
+    }
+
+    /**
+     * Test of setCitiesSearchTree method, of class SocialNetwork.
+     */
+    @Test
+    public void testSetCitiesSearchTree02() {
+        System.out.println("setCitiesSearchTree");
+        sn10.setCitiesSearchTree();
+
+        AVL<CityAndUsers> expResult = new AVL<>();
+        
+        AVL<CityAndUsers> result = sn10.getCitiesAVL();
+
+        // Verify if tree is not equal to empty list.
+        assertFalse(expResult.equals(result));
     }
 
     /**

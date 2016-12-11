@@ -1,5 +1,6 @@
 package model;
 
+import bsts.AVL;
 import graphs.map.MapGraph;
 import graphs.matrix.MatrixGraph;
 import graphs.matrix.MatrixGraphAlgorithms;
@@ -52,6 +53,11 @@ public class SocialNetwork {
      */
     private final MayorAVL mayorsAVL;
 
+    /**
+     * Binary Search Tree with the cities ordered by users ckecked in
+     */
+    private final AVL<CityAndUsers> citiesAVL;
+
     //CONSTRUCTORS
     /**
      * builds up an instance of SocialNetwork with parameters by default
@@ -62,6 +68,7 @@ public class SocialNetwork {
         this.citiesMatrix = new CitiesMatrix();
         this.friendshipMap = new FriendshipMap(false);
         this.mayorsAVL = new MayorAVL();
+        this.citiesAVL = new AVL();
     }
 
     /**
@@ -76,7 +83,7 @@ public class SocialNetwork {
         this.citiesMatrix = new CitiesMatrix(otherSN.citiesMatrix);
         this.friendshipMap = new FriendshipMap(false);
         this.mayorsAVL = new MayorAVL();
-
+        this.citiesAVL = new AVL();
     }
 
     /**
@@ -92,6 +99,7 @@ public class SocialNetwork {
         this.citiesMatrix = new CitiesMatrix();
         this.friendshipMap = new FriendshipMap(false);
         this.mayorsAVL = new MayorAVL();
+        this.citiesAVL = new AVL();
     }
 
     //GETTERS AND SETTERS
@@ -613,6 +621,38 @@ public class SocialNetwork {
     public void setMayorsSearchTree() {
 
         this.getMayorsAVL().createTree(listMayors().values());
+    }
+
+    // ****     5.     **** //
+    /**
+     * Binary Search Tree with the cities ordered by users ckecked in
+     *
+     * @return the citiesAVL
+     */
+    public AVL<CityAndUsers> getCitiesAVL() {
+        return citiesAVL;
+    }
+
+    /**
+     * Creates a cities binary search tree with the cities ordered by users
+     * ckecked in
+     */
+    public void setCitiesSearchTree() {
+
+        // Find how many users
+        for (City city : citiesList) {
+
+            int numUsers = 0;
+
+            for (User user : usersList) {
+
+                if (user.getVisitedCities().getLast().equals(city)) {
+                    numUsers++;
+                }
+            }
+
+            this.citiesAVL.insert(new CityAndUsers(city, numUsers));
+        }
     }
 
     @Override
